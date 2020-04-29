@@ -1,0 +1,74 @@
+---
+title: "Data Vizualization Final Project Exploratory Analysis"
+author: "Andrew Thvedt"
+date: "April 25, 2020"
+output: html_notebook
+---
+```{r}
+#load required packages
+library(tidyverse)
+
+```
+
+```{r, message = FALSE, warning = FALSE}
+#read data
+df <- read_csv('Data/yellow_tripdata_2019-10.csv')
+
+#preview data
+head(df, 10)
+```
+
+```{r}
+#total missingness in data
+sum(is.na(df))
+```
+233615 missing observations in the data for october.
+
+```{r}
+#missingness by column
+colMeans(is.na(df))*100
+```
+
+However, the pickup time, dropoff time, pickup location, and dropoff location columns have 0 missing data. Most of the missingness is in the VendorID, store_and_fwd_flag, passenger_count, payment_type, and RatecodeID columns. This is not a big issue for our project, as these columns are less useful for us.
+
+## Notes Moving Forward
+* download and merge the TLC data containing pickup and dropoff zone IDs with current df
+* google API to get long/lat data based on pickup zones
+* map pickup zones (leaflet?) for visual representation
+
+# Data Processing
+
+```{r}
+#read in jan-jun yellow taxi data
+
+#january
+jan <- read_csv('Data/yellow_tripdata_2019-01.csv')
+
+#february
+feb  <- read_csv('Data/yellow_tripdata_2019-02.csv')
+
+#march
+mar <- read_csv('Data/yellow_tripdata_2019-03.csv')
+
+#april
+apr <- read_csv('Data/yellow_tripdata_2019-04.csv')
+
+#may
+may <- read_csv('Data/yellow_tripdata_2019-05.csv')
+
+#june
+jun <- read_csv('Data/yellow_tripdata_2019-06.csv')
+
+```
+
+
+```{r}
+#remove NA
+jan <- na.omit(jan)
+feb <- na.omit(feb)
+mar <- na.omit(mar)
+apr <- na.omit(apr)
+may <- na.omit(may)
+jun <- na.omit(jun)
+```
+
