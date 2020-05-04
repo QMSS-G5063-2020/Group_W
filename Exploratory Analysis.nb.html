@@ -1759,129 +1759,394 @@ summary {
 <pre class="r"><code>#load required packages
 library(tidyverse)</code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiUmVnaXN0ZXJlZCBTMyBtZXRob2Qgb3ZlcndyaXR0ZW4gYnkgJ2RwbHlyJzpcbiAgbWV0aG9kICAgICAgICAgICBmcm9tXG4gIHByaW50LnJvd3dpc2VfZGYgICAgIFxuXHUwMDFiWzM3beKUgOKUgCBcdTAwMWJbMW1BdHRhY2hpbmcgcGFja2FnZXNcdTAwMWJbMjJtIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgCB0aWR5dmVyc2UgMS4yLjEg4pSA4pSAXHUwMDFiWzM5bVxuXHUwMDFiWzM3bVx1MDAxYlszMm3inJNcdTAwMWJbMzdtIFx1MDAxYlszNG1nZ3Bsb3QyXHUwMDFiWzM3bSAzLjIuMSAgICAgXHUwMDFiWzMybeKck1x1MDAxYlszN20gXHUwMDFiWzM0bXB1cnJyICBcdTAwMWJbMzdtIDAuMy4zXG5cdTAwMWJbMzJt4pyTXHUwMDFiWzM3bSBcdTAwMWJbMzRtdGliYmxlIFx1MDAxYlszN20gMi4xLjMgICAgIFx1MDAxYlszMm3inJNcdTAwMWJbMzdtIFx1MDAxYlszNG1kcGx5ciAgXHUwMDFiWzM3bSAwLjguM1xuXHUwMDFiWzMybeKck1x1MDAxYlszN20gXHUwMDFiWzM0bXRpZHlyICBcdTAwMWJbMzdtIDEuMC4wICAgICBcdTAwMWJbMzJt4pyTXHUwMDFiWzM3bSBcdTAwMWJbMzRtc3RyaW5nclx1MDAxYlszN20gMS40LjBcblx1MDAxYlszMm3inJNcdTAwMWJbMzdtIFx1MDAxYlszNG1yZWFkciAgXHUwMDFiWzM3bSAxLjMuMSAgICAgXHUwMDFiWzMybeKck1x1MDAxYlszN20gXHUwMDFiWzM0bWZvcmNhdHNcdTAwMWJbMzdtIDAuNC4wXHUwMDFiWzM5bVxuXHUwMDFiWzM3beKUgOKUgCBcdTAwMWJbMW1Db25mbGljdHNcdTAwMWJbMjJtIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgCB0aWR5dmVyc2VfY29uZmxpY3RzKCkg4pSA4pSAXG5cdTAwMWJbMzFteFx1MDAxYlszN20gXHUwMDFiWzM0bWRwbHlyXHUwMDFiWzM3bTo6XHUwMDFiWzMybWZpbHRlcigpXHUwMDFiWzM3bSBtYXNrcyBcdTAwMWJbMzRtc3RhdHNcdTAwMWJbMzdtOjpmaWx0ZXIoKVxuXHUwMDFiWzMxbXhcdTAwMWJbMzdtIFx1MDAxYlszNG1kcGx5clx1MDAxYlszN206Olx1MDAxYlszMm1sYWcoKVx1MDAxYlszN20gICAgbWFza3MgXHUwMDFiWzM0bXN0YXRzXHUwMDFiWzM3bTo6bGFnKClcdTAwMWJbMzltXG4ifQ== -->
+<!-- rnb-output-begin eyJkYXRhIjoiUmVnaXN0ZXJlZCBTMyBtZXRob2Qgb3ZlcndyaXR0ZW4gYnkgJ2RwbHlyJzpcbiAgbWV0aG9kICAgICAgICAgICBmcm9tXG4gIHByaW50LnJvd3dpc2VfZGYgICAgIFxuXHUwMDFiWzM3beKUgOKUgCBcdTAwMWJbMW1BdHRhY2hpbmcgcGFja2FnZXNcdTAwMWJbMjJtIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgCB0aWR5dmVyc2UgMS4yLjEg4pSA4pSAXHUwMDFiWzM5bVxuXHUwMDFiWzM3bVx1MDAxYlszMm3inJNcdTAwMWJbMzdtIFx1MDAxYlszNG1nZ3Bsb3QyXHUwMDFiWzM3bSAzLjIuMSAgICAgXHUwMDFiWzMybeKck1x1MDAxYlszN20gXHUwMDFiWzM0bXB1cnJyICBcdTAwMWJbMzdtIDAuMy4zXG5cdTAwMWJbMzJt4pyTXHUwMDFiWzM3bSBcdTAwMWJbMzRtdGliYmxlIFx1MDAxYlszN20gMi4xLjMgICAgIFx1MDAxYlszMm3inJNcdTAwMWJbMzdtIFx1MDAxYlszNG1kcGx5ciAgXHUwMDFiWzM3bSAwLjguM1xuXHUwMDFiWzMybeKck1x1MDAxYlszN20gXHUwMDFiWzM0bXRpZHlyICBcdTAwMWJbMzdtIDEuMC4wICAgICBcdTAwMWJbMzJt4pyTXHUwMDFiWzM3bSBcdTAwMWJbMzRtc3RyaW5nclx1MDAxYlszN20gMS40LjBcblx1MDAxYlszMm3inJNcdTAwMWJbMzdtIFx1MDAxYlszNG1yZWFkciAgXHUwMDFiWzM3bSAxLjMuMSAgICAgXHUwMDFiWzMybeKck1x1MDAxYlszN20gXHUwMDFiWzM0bWZvcmNhdHNcdTAwMWJbMzdtIDAuNC4wXHUwMDFiWzM5bVxuXHUwMDFiWzM3beKUgOKUgCBcdTAwMWJbMW1Db25mbGljdHNcdTAwMWJbMjJtIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgCB0aWR5dmVyc2VfY29uZmxpY3RzKCkg4pSA4pSAXG5cdTAwMWJbMzFteFx1MDAxYlszN20gXHUwMDFiWzM0bWRwbHlyXHUwMDFiWzM3bTo6XHUwMDFiWzMybWZpbHRlcigpXHUwMDFiWzM3bSBtYXNrcyBcdTAwMWJbMzRtc3RhdHNcdTAwMWJbMzdtOjpmaWx0ZXIoKVxuXHUwMDFiWzMxbXhcdTAwMWJbMzdtIFx1MDAxYlszNG1kcGx5clx1MDAxYlszN206Olx1MDAxYlszMm1sYWcoKVx1MDAxYlszN20gICAgbWFza3MgXHUwMDFiWzM0bXN0YXRzXHUwMDFiWzM3bTo6bGFnKClcdTAwMWJbMzltXG4ifQ== -->
 <pre><code>Registered S3 method overwritten by 'dplyr':
   method           from
   print.rowwise_df     
-[37m── [1mAttaching packages[22m ──────────────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──[39m
+[37m── [1mAttaching packages[22m ────────────────────────────────────────────────────────────────────────── tidyverse 1.2.1 ──[39m
 [37m[32m✓[37m [34mggplot2[37m 3.2.1     [32m✓[37m [34mpurrr  [37m 0.3.3
 [32m✓[37m [34mtibble [37m 2.1.3     [32m✓[37m [34mdplyr  [37m 0.8.3
 [32m✓[37m [34mtidyr  [37m 1.0.0     [32m✓[37m [34mstringr[37m 1.4.0
 [32m✓[37m [34mreadr  [37m 1.3.1     [32m✓[37m [34mforcats[37m 0.4.0[39m
-[37m── [1mConflicts[22m ─────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+[37m── [1mConflicts[22m ───────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
 [31mx[37m [34mdplyr[37m::[32mfilter()[37m masks [34mstats[37m::filter()
 [31mx[37m [34mdplyr[37m::[32mlag()[37m    masks [34mstats[37m::lag()[39m</code></pre>
 <!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc2V0LnNlZWQoMSlcbmBgYCJ9 -->
+<pre class="r"><code>set.seed(1)</code></pre>
+<!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI3JlYWQgZGF0YVxuZGYgPC0gcmVhZF9jc3YoJ0RhdGEveWVsbG93X3RyaXBkYXRhXzIwMTktMTAuY3N2JylcblxuI3ByZXZpZXcgZGF0YVxuaGVhZChkZiwgMTApXG5gYGAifQ== -->
-<pre class="r"><code>#read data
-df &lt;- read_csv('Data/yellow_tripdata_2019-10.csv')
-
-#preview data
-head(df, 10)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-frame-begin eyJtZXRhZGF0YSI6eyJjbGFzc2VzIjpbInRibF9kZiIsInRibCIsImRhdGEuZnJhbWUiXSwibmNvbCI6MTgsIm5yb3ciOjEwfSwicmRmIjoiSDRzSUFBQUFBQUFBQTYxV3pXc1RRUlNmZkRYdDJpOWpLb0lWU2tFclFnS2xIdFJMUnkxcW9kaFNVK2xCaU5QZFNidDBkMmZabmRnUEwvMERCTTk2OG1MYWswZXZEWjcxNUVHOGFMMTRFRVJCOUdiajdNN01tcDAySkVVZlRINHpiOTc3elcvZVRES1puMXFjMEJZMUFFQUtwTG9TSUpWaFhaQlpLTjBvWEFJZ25XU0RCRWlEbmdEWFdkQUoxc214MXMrYU52a2RoS1lpQkoyaG1zZjRROTZyNzR6YWx6b0FESGVHT2RiR1FJamJIK0pZKzhibnQvT1E0L0JXaU0rL2lyalQ0V0t4aldSMEMvays2d3l5bGhUTzdOenNuZWxGbllwaFZ6aWthaWJkSkE0V21kS1pXaWhkWjdEZnBINTdqS3ZaK1MxVUFhSHlZeHhyUDhUOFNhSDJERmRmZXlUeVgyNUo5Y25HRVFTbkdpMDF4ayt1MVVtMFE5aXRucHpnZmY4a3NLZncrRVJvTUErT1pEQWg4aThvdkVmVTF3NEJMNDhtci9idC85OFJ5dUV0c2JNbGdXaUU0MlVReDVXUnc5RzR6OUdHc1lwRWZ2U01ZMG5oYThkcjczRWNqU3JDZWNIaEZZT0RBcFY1T1c2VkYvSG1SRnhCNERqSGVscU0yK0ZaZ2RmcWNWNXhFMVhjM1JNNjJxQ2FKM2xieFhmS3E2TGtsUU1vTWY4NnNEZWdRNE5kUEI2T2ZxNEVwdkwrcThGVG01OXV2c2cvbEx5VGIvazNXY1hkRnY1MktIbmhpUGltWDV6aCs3bkMxNi8zaDl1cXdIWTRmbzdqRExsMy91ZXJ4eEZ2aS92VDhmNFA1TVZmQUFmWldMNGRPZUhzdm9zZGczalRVMktjcHk1Mnk2NnByMWJkc29Fb3BxYU54ZHhRT0dkNHhDV1Zpam81NExLSENUdkwyQ3ZycE9ySTMvWSs2cGtzeC9RcGNuUVpxODJ6WEowWU9GbzI1MVBpNFRKeWpISmxqVFVMTFl1WjNybUZHYUlqYWhJbml1NmRtajNvYzlHR2pSMWFwaHV1WE9kWUJRV2tkcE9lREY2bkhwTHZrRTFSbWFKMUtZc3lxYkhvWGtvc3k0Lzdoa3piOWNnREhDN21WejE5QlhuTCtHOENSVlk4SWE4VFZoWS9VTnNVSDM4WjVSbHByS3FvV1BIWVNTbW4xK09SdGFJOHdUN1drbHZzbzlGby9BTGg0eGdMemhJM1dJNkZKb04vUFZsbGxZU25PQWFxVGtCdEZQU1Zxck5hQ0c2NkZrNXphOVh2RTMydHFaL2pVdEp5WjFuNXlMTzdZVHF5VGhrTExXRXJPZ2JzK3lpcVlYWU5lWTdweUF2UXp6WWU3cnZvZW1aVVZJMTUvV0pZYmVuUmlTVTkvTy9DL2gvUFJhZ3ZJZ29BQUE9PSJ9 -->
-<div data-pagedtable="false">
-<script data-pagedtable-source type="application/json">
-{"columns":[{"label":["VendorID"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["tpep_pickup_datetime"],"name":[2],"type":["S3: POSIXct"],"align":["right"]},{"label":["tpep_dropoff_datetime"],"name":[3],"type":["S3: POSIXct"],"align":["right"]},{"label":["passenger_count"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["trip_distance"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["RatecodeID"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["store_and_fwd_flag"],"name":[7],"type":["chr"],"align":["left"]},{"label":["PULocationID"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["DOLocationID"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["payment_type"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["fare_amount"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["extra"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["mta_tax"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["tip_amount"],"name":[14],"type":["dbl"],"align":["right"]},{"label":["tolls_amount"],"name":[15],"type":["dbl"],"align":["right"]},{"label":["improvement_surcharge"],"name":[16],"type":["dbl"],"align":["right"]},{"label":["total_amount"],"name":[17],"type":["dbl"],"align":["right"]},{"label":["congestion_surcharge"],"name":[18],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"2019-10-01 00:19:55","3":"2019-10-01 00:23:57","4":"1","5":"0.4","6":"1","7":"N","8":"48","9":"163","10":"2","11":"4.5","12":"3.0","13":"0.5","14":"0.00","15":"0.00","16":"0.3","17":"8.30","18":"2.5"},{"1":"1","2":"2019-10-01 00:40:19","3":"2019-10-01 00:55:17","4":"2","5":"4.3","6":"1","7":"N","8":"144","9":"141","10":"1","11":"14.5","12":"3.0","13":"0.5","14":"2.00","15":"0.00","16":"0.3","17":"20.30","18":"2.5"},{"1":"1","2":"2019-10-01 00:06:52","3":"2019-10-01 00:21:23","4":"1","5":"5.0","6":"1","7":"N","8":"137","9":"80","10":"1","11":"17.0","12":"3.0","13":"0.5","14":"5.20","15":"0.00","16":"0.3","17":"26.00","18":"2.5"},{"1":"2","2":"2019-10-01 00:36:08","3":"2019-10-01 00:36:15","4":"1","5":"0.0","6":"1","7":"N","8":"25","9":"25","10":"4","11":"-2.5","12":"-0.5","13":"-0.5","14":"0.00","15":"0.00","16":"-0.3","17":"-3.80","18":"0.0"},{"1":"2","2":"2019-10-01 00:36:08","3":"2019-10-01 00:36:15","4":"1","5":"0.0","6":"1","7":"N","8":"25","9":"25","10":"2","11":"2.5","12":"0.5","13":"0.5","14":"0.00","15":"0.00","16":"0.3","17":"3.80","18":"0.0"},{"1":"2","2":"2019-10-01 00:20:15","3":"2019-10-01 00:20:29","4":"1","5":"0.0","6":"1","7":"N","8":"193","9":"193","10":"1","11":"2.5","12":"0.5","13":"0.5","14":"0.00","15":"0.00","16":"0.3","17":"3.80","18":"0.0"},{"1":"2","2":"2019-10-01 00:22:41","3":"2019-10-01 00:22:48","4":"1","5":"0.0","6":"1","7":"N","8":"193","9":"193","10":"2","11":"2.5","12":"0.5","13":"0.5","14":"0.00","15":"0.00","16":"0.3","17":"3.80","18":"0.0"},{"1":"2","2":"2019-10-01 00:23:14","3":"2019-10-01 00:23:18","4":"1","5":"0.0","6":"1","7":"N","8":"193","9":"193","10":"2","11":"2.5","12":"0.5","13":"0.5","14":"0.00","15":"0.00","16":"0.3","17":"3.80","18":"0.0"},{"1":"1","2":"2019-10-01 00:03:00","3":"2019-10-01 00:13:37","4":"3","5":"2.2","6":"1","7":"N","8":"163","9":"239","10":"1","11":"10.5","12":"3.0","13":"0.5","14":"2.85","15":"0.00","16":"0.3","17":"17.15","18":"2.5"},{"1":"1","2":"2019-10-01 00:23:09","3":"2019-10-01 00:50:34","4":"1","5":"13.0","6":"1","7":"N","8":"234","9":"9","10":"1","11":"37.5","12":"3.0","13":"0.5","14":"9.45","15":"6.12","16":"0.3","17":"56.87","18":"2.5"}],"options":{"columns":{"min":{},"max":[10],"total":[18]},"rows":{"min":[10],"max":[10],"total":[10]},"pages":{}}}
-  </script>
-</div>
-<!-- rnb-frame-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI3RvdGFsIG1pc3NpbmduZXNzIGluIGRhdGFcbnN1bShpcy5uYShkZikpXG5gYGAifQ== -->
-<pre class="r"><code>#total missingness in data
-sum(is.na(df))</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiWzFdIDIzMzYxNVxuIn0= -->
-<pre><code>[1] 233615</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI21pc3NpbmduZXNzIGJ5IGNvbHVtblxuY29sTWVhbnMoaXMubmEoZGYpKSoxMDBcbmBgYCJ9 -->
-<pre class="r"><code>#missingness by column
-colMeans(is.na(df))*100</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiICAgICAgICAgICAgIFZlbmRvcklEICB0cGVwX3BpY2t1cF9kYXRldGltZSB0cGVwX2Ryb3BvZmZfZGF0ZXRpbWUgICAgICAgcGFzc2VuZ2VyX2NvdW50ICAgICAgICAgdHJpcF9kaXN0YW5jZSAgICAgICAgICAgIFJhdGVjb2RlSUQgXG4gICAgICAgICAgICAgMC42NDc2ODEgICAgICAgICAgICAgIDAuMDAwMDAwICAgICAgICAgICAgICAwLjAwMDAwMCAgICAgICAgICAgICAgMC42NDc2ODEgICAgICAgICAgICAgIDAuMDAwMDAwICAgICAgICAgICAgICAwLjY0NzY4MSBcbiAgIHN0b3JlX2FuZF9md2RfZmxhZyAgICAgICAgICBQVUxvY2F0aW9uSUQgICAgICAgICAgRE9Mb2NhdGlvbklEICAgICAgICAgIHBheW1lbnRfdHlwZSAgICAgICAgICAgZmFyZV9hbW91bnQgICAgICAgICAgICAgICAgIGV4dHJhIFxuICAgICAgICAgICAgIDAuNjQ3NjgxICAgICAgICAgICAgICAwLjAwMDAwMCAgICAgICAgICAgICAgMC4wMDAwMDAgICAgICAgICAgICAgIDAuNjQ3NjgxICAgICAgICAgICAgICAwLjAwMDAwMCAgICAgICAgICAgICAgMC4wMDAwMDAgXG4gICAgICAgICAgICAgIG10YV90YXggICAgICAgICAgICB0aXBfYW1vdW50ICAgICAgICAgIHRvbGxzX2Ftb3VudCBpbXByb3ZlbWVudF9zdXJjaGFyZ2UgICAgICAgICAgdG90YWxfYW1vdW50ICBjb25nZXN0aW9uX3N1cmNoYXJnZSBcbiAgICAgICAgICAgICAwLjAwMDAwMCAgICAgICAgICAgICAgMC4wMDAwMDAgICAgICAgICAgICAgIDAuMDAwMDAwICAgICAgICAgICAgICAwLjAwMDAwMCAgICAgICAgICAgICAgMC4wMDAwMDAgICAgICAgICAgICAgIDAuMDAwMDAwIFxuIn0= -->
-<pre><code>             VendorID  tpep_pickup_datetime tpep_dropoff_datetime       passenger_count         trip_distance            RatecodeID 
-             0.647681              0.000000              0.000000              0.647681              0.000000              0.647681 
-   store_and_fwd_flag          PULocationID          DOLocationID          payment_type           fare_amount                 extra 
-             0.647681              0.000000              0.000000              0.647681              0.000000              0.000000 
-              mta_tax            tip_amount          tolls_amount improvement_surcharge          total_amount  congestion_surcharge 
-             0.000000              0.000000              0.000000              0.000000              0.000000              0.000000 </code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>233615 missing observations in the data for october.</p>
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI21pc3NpbmduZXNzIGJ5IGNvbHVtblxuY29sTWVhbnMoaXMubmEoZGYpKSoxMDBcbmBgYCJ9 -->
-<pre class="r"><code>#missingness by column
-colMeans(is.na(df))*100</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiICAgICAgICAgICAgIFZlbmRvcklEICB0cGVwX3BpY2t1cF9kYXRldGltZSB0cGVwX2Ryb3BvZmZfZGF0ZXRpbWUgICAgICAgcGFzc2VuZ2VyX2NvdW50ICAgICAgICAgdHJpcF9kaXN0YW5jZSAgICAgICAgICAgIFJhdGVjb2RlSUQgXG4gICAgICAgICAgICAgMC42NDc2ODEgICAgICAgICAgICAgIDAuMDAwMDAwICAgICAgICAgICAgICAwLjAwMDAwMCAgICAgICAgICAgICAgMC42NDc2ODEgICAgICAgICAgICAgIDAuMDAwMDAwICAgICAgICAgICAgICAwLjY0NzY4MSBcbiAgIHN0b3JlX2FuZF9md2RfZmxhZyAgICAgICAgICBQVUxvY2F0aW9uSUQgICAgICAgICAgRE9Mb2NhdGlvbklEICAgICAgICAgIHBheW1lbnRfdHlwZSAgICAgICAgICAgZmFyZV9hbW91bnQgICAgICAgICAgICAgICAgIGV4dHJhIFxuICAgICAgICAgICAgIDAuNjQ3NjgxICAgICAgICAgICAgICAwLjAwMDAwMCAgICAgICAgICAgICAgMC4wMDAwMDAgICAgICAgICAgICAgIDAuNjQ3NjgxICAgICAgICAgICAgICAwLjAwMDAwMCAgICAgICAgICAgICAgMC4wMDAwMDAgXG4gICAgICAgICAgICAgIG10YV90YXggICAgICAgICAgICB0aXBfYW1vdW50ICAgICAgICAgIHRvbGxzX2Ftb3VudCBpbXByb3ZlbWVudF9zdXJjaGFyZ2UgICAgICAgICAgdG90YWxfYW1vdW50ICBjb25nZXN0aW9uX3N1cmNoYXJnZSBcbiAgICAgICAgICAgICAwLjAwMDAwMCAgICAgICAgICAgICAgMC4wMDAwMDAgICAgICAgICAgICAgIDAuMDAwMDAwICAgICAgICAgICAgICAwLjAwMDAwMCAgICAgICAgICAgICAgMC4wMDAwMDAgICAgICAgICAgICAgIDAuMDAwMDAwIFxuIn0= -->
-<pre><code>             VendorID  tpep_pickup_datetime tpep_dropoff_datetime       passenger_count         trip_distance            RatecodeID 
-             0.647681              0.000000              0.000000              0.647681              0.000000              0.647681 
-   store_and_fwd_flag          PULocationID          DOLocationID          payment_type           fare_amount                 extra 
-             0.647681              0.000000              0.000000              0.647681              0.000000              0.000000 
-              mta_tax            tip_amount          tolls_amount improvement_surcharge          total_amount  congestion_surcharge 
-             0.000000              0.000000              0.000000              0.000000              0.000000              0.000000 </code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<p>However, the pickup time, dropoff time, pickup location, and dropoff location columns have 0 missing data. Most of the missingness is in the VendorID, store_and_fwd_flag, passenger_count, payment_type, and RatecodeID columns. This is not a big issue for our project, as these columns are less useful for us.</p>
-<div id="notes-moving-forward" class="section level2">
-<h2>Notes Moving Forward</h2>
-<ul>
-<li>download and merge the TLC data containing pickup and dropoff zone IDs with current df</li>
-<li>google API to get long/lat data based on pickup zones</li>
-<li>map pickup zones (leaflet?) for visual representation</li>
-</ul>
-</div>
+<p>ratecodeID = 1 passenger count 1-5 trip distance != 0 fare amount &gt; 2.5 trip distance &gt;0</p>
+<p>within zone trips average speed tip by zone</p>
 <div id="data-processing" class="section level1">
 <h1>Data Processing</h1>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI3JlYWQgaW4gamFuLWp1biB5ZWxsb3cgdGF4aSBkYXRhXG5cbiNqYW51YXJ5XG5qYW4gPC0gcmVhZF9jc3YoJ0RhdGEveWVsbG93X3RyaXBkYXRhXzIwMTktMDEuY3N2JylcblxuI2ZlYnJ1YXJ5XG5mZWIgIDwtIHJlYWRfY3N2KCdEYXRhL3llbGxvd190cmlwZGF0YV8yMDE5LTAyLmNzdicpXG5cbiNtYXJjaFxubWFyIDwtIHJlYWRfY3N2KCdEYXRhL3llbGxvd190cmlwZGF0YV8yMDE5LTAzLmNzdicpXG5cbiNhcHJpbFxuYXByIDwtIHJlYWRfY3N2KCdEYXRhL3llbGxvd190cmlwZGF0YV8yMDE5LTA0LmNzdicpXG5cbiNtYXlcbm1heSA8LSByZWFkX2NzdignRGF0YS95ZWxsb3dfdHJpcGRhdGFfMjAxOS0wNS5jc3YnKVxuXG4janVuZVxuanVuIDwtIHJlYWRfY3N2KCdEYXRhL3llbGxvd190cmlwZGF0YV8yMDE5LTA2LmNzdicpXG5cbmBgYCJ9 -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI3JlYWQgaW4gamFuLWp1biB5ZWxsb3cgdGF4aSBkYXRhXG5cbiNqYW51YXJ5XG5qYW4gPC0gcmVhZF9jc3YoJ0RhdGEveWVsbG93X3RyaXBkYXRhXzIwMTktMDEuY3N2JylcbmBgYCJ9 -->
 <pre class="r"><code>#read in jan-jun yellow taxi data
 
 #january
-jan &lt;- read_csv('Data/yellow_tripdata_2019-01.csv')
+jan &lt;- read_csv('Data/yellow_tripdata_2019-01.csv')</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiUGFyc2VkIHdpdGggY29sdW1uIHNwZWNpZmljYXRpb246XG5jb2xzKFxuICBWZW5kb3JJRCA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICB0cGVwX3BpY2t1cF9kYXRldGltZSA9IFx1MDAxYlszNG1jb2xfZGF0ZXRpbWUoZm9ybWF0ID0gXCJcIilcdTAwMWJbMzltLFxuICB0cGVwX2Ryb3BvZmZfZGF0ZXRpbWUgPSBcdTAwMWJbMzRtY29sX2RhdGV0aW1lKGZvcm1hdCA9IFwiXCIpXHUwMDFiWzM5bSxcbiAgcGFzc2VuZ2VyX2NvdW50ID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW0sXG4gIHRyaXBfZGlzdGFuY2UgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgUmF0ZWNvZGVJRCA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICBzdG9yZV9hbmRfZndkX2ZsYWcgPSBcdTAwMWJbMzFtY29sX2NoYXJhY3RlcigpXHUwMDFiWzM5bSxcbiAgUFVMb2NhdGlvbklEID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW0sXG4gIERPTG9jYXRpb25JRCA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICBwYXltZW50X3R5cGUgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgZmFyZV9hbW91bnQgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgZXh0cmEgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgbXRhX3RheCA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICB0aXBfYW1vdW50ID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW0sXG4gIHRvbGxzX2Ftb3VudCA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICBpbXByb3ZlbWVudF9zdXJjaGFyZ2UgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgdG90YWxfYW1vdW50ID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW0sXG4gIGNvbmdlc3Rpb25fc3VyY2hhcmdlID0gXHUwMDFiWzMzbWNvbF9sb2dpY2FsKClcdTAwMWJbMzltXG4pXG4zNyBwYXJzaW5nIGZhaWx1cmVzLlxuICAgIHJvdyAgICAgICAgICAgICAgICAgIGNvbCAgICAgICAgICAgZXhwZWN0ZWQgYWN0dWFsICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIGZpbGVcbjY4NjUzMDAgY29uZ2VzdGlvbl9zdXJjaGFyZ2UgMS8wL1QvRi9UUlVFL0ZBTFNFICAgIDIuNSAnRGF0YS95ZWxsb3dfdHJpcGRhdGFfMjAxOS0wMS5jc3YnXG42ODY1MzAxIGNvbmdlc3Rpb25fc3VyY2hhcmdlIDEvMC9UL0YvVFJVRS9GQUxTRSAgICAyLjUgJ0RhdGEveWVsbG93X3RyaXBkYXRhXzIwMTktMDEuY3N2J1xuNjg2NTMwMiBjb25nZXN0aW9uX3N1cmNoYXJnZSAxLzAvVC9GL1RSVUUvRkFMU0UgICAgMi41ICdEYXRhL3llbGxvd190cmlwZGF0YV8yMDE5LTAxLmNzdidcbjY5MjI2NzkgY29uZ2VzdGlvbl9zdXJjaGFyZ2UgMS8wL1QvRi9UUlVFL0ZBTFNFICAgIDIuNSAnRGF0YS95ZWxsb3dfdHJpcGRhdGFfMjAxOS0wMS5jc3YnXG42OTYwNDY3IGNvbmdlc3Rpb25fc3VyY2hhcmdlIDEvMC9UL0YvVFJVRS9GQUxTRSAgICAyLjUgJ0RhdGEveWVsbG93X3RyaXBkYXRhXzIwMTktMDEuY3N2J1xuLi4uLi4uLiAuLi4uLi4uLi4uLi4uLi4uLi4uLiAuLi4uLi4uLi4uLi4uLi4uLi4gLi4uLi4uIC4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi4uLi5cblNlZSBwcm9ibGVtcyguLi4pIGZvciBtb3JlIGRldGFpbHMuXG4ifQ== -->
+<pre><code>Parsed with column specification:
+cols(
+  VendorID = [32mcol_double()[39m,
+  tpep_pickup_datetime = [34mcol_datetime(format = &quot;&quot;)[39m,
+  tpep_dropoff_datetime = [34mcol_datetime(format = &quot;&quot;)[39m,
+  passenger_count = [32mcol_double()[39m,
+  trip_distance = [32mcol_double()[39m,
+  RatecodeID = [32mcol_double()[39m,
+  store_and_fwd_flag = [31mcol_character()[39m,
+  PULocationID = [32mcol_double()[39m,
+  DOLocationID = [32mcol_double()[39m,
+  payment_type = [32mcol_double()[39m,
+  fare_amount = [32mcol_double()[39m,
+  extra = [32mcol_double()[39m,
+  mta_tax = [32mcol_double()[39m,
+  tip_amount = [32mcol_double()[39m,
+  tolls_amount = [32mcol_double()[39m,
+  improvement_surcharge = [32mcol_double()[39m,
+  total_amount = [32mcol_double()[39m,
+  congestion_surcharge = [33mcol_logical()[39m
+)
+37 parsing failures.
+    row                  col           expected actual                               file
+6865300 congestion_surcharge 1/0/T/F/TRUE/FALSE    2.5 'Data/yellow_tripdata_2019-01.csv'
+6865301 congestion_surcharge 1/0/T/F/TRUE/FALSE    2.5 'Data/yellow_tripdata_2019-01.csv'
+6865302 congestion_surcharge 1/0/T/F/TRUE/FALSE    2.5 'Data/yellow_tripdata_2019-01.csv'
+6922679 congestion_surcharge 1/0/T/F/TRUE/FALSE    2.5 'Data/yellow_tripdata_2019-01.csv'
+6960467 congestion_surcharge 1/0/T/F/TRUE/FALSE    2.5 'Data/yellow_tripdata_2019-01.csv'
+....... .................... .................. ...... ..................................
+See problems(...) for more details.</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2ZlYnJ1YXJ5XG5mZWIgIDwtIHJlYWRfY3N2KCdEYXRhL3llbGxvd190cmlwZGF0YV8yMDE5LTAyLmNzdicpXG5gYGAifQ== -->
+<pre class="r"><code>#february
+feb  &lt;- read_csv('Data/yellow_tripdata_2019-02.csv')</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiUGFyc2VkIHdpdGggY29sdW1uIHNwZWNpZmljYXRpb246XG5jb2xzKFxuICBWZW5kb3JJRCA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICB0cGVwX3BpY2t1cF9kYXRldGltZSA9IFx1MDAxYlszNG1jb2xfZGF0ZXRpbWUoZm9ybWF0ID0gXCJcIilcdTAwMWJbMzltLFxuICB0cGVwX2Ryb3BvZmZfZGF0ZXRpbWUgPSBcdTAwMWJbMzRtY29sX2RhdGV0aW1lKGZvcm1hdCA9IFwiXCIpXHUwMDFiWzM5bSxcbiAgcGFzc2VuZ2VyX2NvdW50ID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW0sXG4gIHRyaXBfZGlzdGFuY2UgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgUmF0ZWNvZGVJRCA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICBzdG9yZV9hbmRfZndkX2ZsYWcgPSBcdTAwMWJbMzFtY29sX2NoYXJhY3RlcigpXHUwMDFiWzM5bSxcbiAgUFVMb2NhdGlvbklEID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW0sXG4gIERPTG9jYXRpb25JRCA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICBwYXltZW50X3R5cGUgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgZmFyZV9hbW91bnQgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgZXh0cmEgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgbXRhX3RheCA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICB0aXBfYW1vdW50ID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW0sXG4gIHRvbGxzX2Ftb3VudCA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICBpbXByb3ZlbWVudF9zdXJjaGFyZ2UgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgdG90YWxfYW1vdW50ID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW0sXG4gIGNvbmdlc3Rpb25fc3VyY2hhcmdlID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW1cbilcbiJ9 -->
+<pre><code>Parsed with column specification:
+cols(
+  VendorID = [32mcol_double()[39m,
+  tpep_pickup_datetime = [34mcol_datetime(format = &quot;&quot;)[39m,
+  tpep_dropoff_datetime = [34mcol_datetime(format = &quot;&quot;)[39m,
+  passenger_count = [32mcol_double()[39m,
+  trip_distance = [32mcol_double()[39m,
+  RatecodeID = [32mcol_double()[39m,
+  store_and_fwd_flag = [31mcol_character()[39m,
+  PULocationID = [32mcol_double()[39m,
+  DOLocationID = [32mcol_double()[39m,
+  payment_type = [32mcol_double()[39m,
+  fare_amount = [32mcol_double()[39m,
+  extra = [32mcol_double()[39m,
+  mta_tax = [32mcol_double()[39m,
+  tip_amount = [32mcol_double()[39m,
+  tolls_amount = [32mcol_double()[39m,
+  improvement_surcharge = [32mcol_double()[39m,
+  total_amount = [32mcol_double()[39m,
+  congestion_surcharge = [32mcol_double()[39m
+)</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI21hcmNoXG5tYXIgPC0gcmVhZF9jc3YoJ0RhdGEveWVsbG93X3RyaXBkYXRhXzIwMTktMDMuY3N2JylcbmBgYCJ9 -->
+<pre class="r"><code>#march
+mar &lt;- read_csv('Data/yellow_tripdata_2019-03.csv')</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiUGFyc2VkIHdpdGggY29sdW1uIHNwZWNpZmljYXRpb246XG5jb2xzKFxuICBWZW5kb3JJRCA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICB0cGVwX3BpY2t1cF9kYXRldGltZSA9IFx1MDAxYlszNG1jb2xfZGF0ZXRpbWUoZm9ybWF0ID0gXCJcIilcdTAwMWJbMzltLFxuICB0cGVwX2Ryb3BvZmZfZGF0ZXRpbWUgPSBcdTAwMWJbMzRtY29sX2RhdGV0aW1lKGZvcm1hdCA9IFwiXCIpXHUwMDFiWzM5bSxcbiAgcGFzc2VuZ2VyX2NvdW50ID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW0sXG4gIHRyaXBfZGlzdGFuY2UgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgUmF0ZWNvZGVJRCA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICBzdG9yZV9hbmRfZndkX2ZsYWcgPSBcdTAwMWJbMzFtY29sX2NoYXJhY3RlcigpXHUwMDFiWzM5bSxcbiAgUFVMb2NhdGlvbklEID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW0sXG4gIERPTG9jYXRpb25JRCA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICBwYXltZW50X3R5cGUgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgZmFyZV9hbW91bnQgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgZXh0cmEgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgbXRhX3RheCA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICB0aXBfYW1vdW50ID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW0sXG4gIHRvbGxzX2Ftb3VudCA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICBpbXByb3ZlbWVudF9zdXJjaGFyZ2UgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgdG90YWxfYW1vdW50ID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW0sXG4gIGNvbmdlc3Rpb25fc3VyY2hhcmdlID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW1cbilcbiJ9 -->
+<pre><code>Parsed with column specification:
+cols(
+  VendorID = [32mcol_double()[39m,
+  tpep_pickup_datetime = [34mcol_datetime(format = &quot;&quot;)[39m,
+  tpep_dropoff_datetime = [34mcol_datetime(format = &quot;&quot;)[39m,
+  passenger_count = [32mcol_double()[39m,
+  trip_distance = [32mcol_double()[39m,
+  RatecodeID = [32mcol_double()[39m,
+  store_and_fwd_flag = [31mcol_character()[39m,
+  PULocationID = [32mcol_double()[39m,
+  DOLocationID = [32mcol_double()[39m,
+  payment_type = [32mcol_double()[39m,
+  fare_amount = [32mcol_double()[39m,
+  extra = [32mcol_double()[39m,
+  mta_tax = [32mcol_double()[39m,
+  tip_amount = [32mcol_double()[39m,
+  tolls_amount = [32mcol_double()[39m,
+  improvement_surcharge = [32mcol_double()[39m,
+  total_amount = [32mcol_double()[39m,
+  congestion_surcharge = [32mcol_double()[39m
+)</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2FwcmlsXG5hcHIgPC0gcmVhZF9jc3YoJ0RhdGEveWVsbG93X3RyaXBkYXRhXzIwMTktMDQuY3N2JylcbmBgYCJ9 -->
+<pre class="r"><code>#april
+apr &lt;- read_csv('Data/yellow_tripdata_2019-04.csv')</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiUGFyc2VkIHdpdGggY29sdW1uIHNwZWNpZmljYXRpb246XG5jb2xzKFxuICBWZW5kb3JJRCA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICB0cGVwX3BpY2t1cF9kYXRldGltZSA9IFx1MDAxYlszNG1jb2xfZGF0ZXRpbWUoZm9ybWF0ID0gXCJcIilcdTAwMWJbMzltLFxuICB0cGVwX2Ryb3BvZmZfZGF0ZXRpbWUgPSBcdTAwMWJbMzRtY29sX2RhdGV0aW1lKGZvcm1hdCA9IFwiXCIpXHUwMDFiWzM5bSxcbiAgcGFzc2VuZ2VyX2NvdW50ID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW0sXG4gIHRyaXBfZGlzdGFuY2UgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgUmF0ZWNvZGVJRCA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICBzdG9yZV9hbmRfZndkX2ZsYWcgPSBcdTAwMWJbMzFtY29sX2NoYXJhY3RlcigpXHUwMDFiWzM5bSxcbiAgUFVMb2NhdGlvbklEID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW0sXG4gIERPTG9jYXRpb25JRCA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICBwYXltZW50X3R5cGUgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgZmFyZV9hbW91bnQgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgZXh0cmEgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgbXRhX3RheCA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICB0aXBfYW1vdW50ID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW0sXG4gIHRvbGxzX2Ftb3VudCA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICBpbXByb3ZlbWVudF9zdXJjaGFyZ2UgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgdG90YWxfYW1vdW50ID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW0sXG4gIGNvbmdlc3Rpb25fc3VyY2hhcmdlID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW1cbilcbiJ9 -->
+<pre><code>Parsed with column specification:
+cols(
+  VendorID = [32mcol_double()[39m,
+  tpep_pickup_datetime = [34mcol_datetime(format = &quot;&quot;)[39m,
+  tpep_dropoff_datetime = [34mcol_datetime(format = &quot;&quot;)[39m,
+  passenger_count = [32mcol_double()[39m,
+  trip_distance = [32mcol_double()[39m,
+  RatecodeID = [32mcol_double()[39m,
+  store_and_fwd_flag = [31mcol_character()[39m,
+  PULocationID = [32mcol_double()[39m,
+  DOLocationID = [32mcol_double()[39m,
+  payment_type = [32mcol_double()[39m,
+  fare_amount = [32mcol_double()[39m,
+  extra = [32mcol_double()[39m,
+  mta_tax = [32mcol_double()[39m,
+  tip_amount = [32mcol_double()[39m,
+  tolls_amount = [32mcol_double()[39m,
+  improvement_surcharge = [32mcol_double()[39m,
+  total_amount = [32mcol_double()[39m,
+  congestion_surcharge = [32mcol_double()[39m
+)</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI21heVxubWF5IDwtIHJlYWRfY3N2KCdEYXRhL3llbGxvd190cmlwZGF0YV8yMDE5LTA1LmNzdicpXG5gYGAifQ== -->
+<pre class="r"><code>#may
+may &lt;- read_csv('Data/yellow_tripdata_2019-05.csv')</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiUGFyc2VkIHdpdGggY29sdW1uIHNwZWNpZmljYXRpb246XG5jb2xzKFxuICBWZW5kb3JJRCA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICB0cGVwX3BpY2t1cF9kYXRldGltZSA9IFx1MDAxYlszNG1jb2xfZGF0ZXRpbWUoZm9ybWF0ID0gXCJcIilcdTAwMWJbMzltLFxuICB0cGVwX2Ryb3BvZmZfZGF0ZXRpbWUgPSBcdTAwMWJbMzRtY29sX2RhdGV0aW1lKGZvcm1hdCA9IFwiXCIpXHUwMDFiWzM5bSxcbiAgcGFzc2VuZ2VyX2NvdW50ID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW0sXG4gIHRyaXBfZGlzdGFuY2UgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgUmF0ZWNvZGVJRCA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICBzdG9yZV9hbmRfZndkX2ZsYWcgPSBcdTAwMWJbMzFtY29sX2NoYXJhY3RlcigpXHUwMDFiWzM5bSxcbiAgUFVMb2NhdGlvbklEID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW0sXG4gIERPTG9jYXRpb25JRCA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICBwYXltZW50X3R5cGUgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgZmFyZV9hbW91bnQgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgZXh0cmEgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgbXRhX3RheCA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICB0aXBfYW1vdW50ID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW0sXG4gIHRvbGxzX2Ftb3VudCA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICBpbXByb3ZlbWVudF9zdXJjaGFyZ2UgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgdG90YWxfYW1vdW50ID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW0sXG4gIGNvbmdlc3Rpb25fc3VyY2hhcmdlID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW1cbilcbiJ9 -->
+<pre><code>Parsed with column specification:
+cols(
+  VendorID = [32mcol_double()[39m,
+  tpep_pickup_datetime = [34mcol_datetime(format = &quot;&quot;)[39m,
+  tpep_dropoff_datetime = [34mcol_datetime(format = &quot;&quot;)[39m,
+  passenger_count = [32mcol_double()[39m,
+  trip_distance = [32mcol_double()[39m,
+  RatecodeID = [32mcol_double()[39m,
+  store_and_fwd_flag = [31mcol_character()[39m,
+  PULocationID = [32mcol_double()[39m,
+  DOLocationID = [32mcol_double()[39m,
+  payment_type = [32mcol_double()[39m,
+  fare_amount = [32mcol_double()[39m,
+  extra = [32mcol_double()[39m,
+  mta_tax = [32mcol_double()[39m,
+  tip_amount = [32mcol_double()[39m,
+  tolls_amount = [32mcol_double()[39m,
+  improvement_surcharge = [32mcol_double()[39m,
+  total_amount = [32mcol_double()[39m,
+  congestion_surcharge = [32mcol_double()[39m
+)</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2p1bmVcbmp1biA8LSByZWFkX2NzdignRGF0YS95ZWxsb3dfdHJpcGRhdGFfMjAxOS0wNi5jc3YnKVxuYGBgIn0= -->
+<pre class="r"><code>#june
+jun &lt;- read_csv('Data/yellow_tripdata_2019-06.csv')</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiUGFyc2VkIHdpdGggY29sdW1uIHNwZWNpZmljYXRpb246XG5jb2xzKFxuICBWZW5kb3JJRCA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICB0cGVwX3BpY2t1cF9kYXRldGltZSA9IFx1MDAxYlszNG1jb2xfZGF0ZXRpbWUoZm9ybWF0ID0gXCJcIilcdTAwMWJbMzltLFxuICB0cGVwX2Ryb3BvZmZfZGF0ZXRpbWUgPSBcdTAwMWJbMzRtY29sX2RhdGV0aW1lKGZvcm1hdCA9IFwiXCIpXHUwMDFiWzM5bSxcbiAgcGFzc2VuZ2VyX2NvdW50ID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW0sXG4gIHRyaXBfZGlzdGFuY2UgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgUmF0ZWNvZGVJRCA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICBzdG9yZV9hbmRfZndkX2ZsYWcgPSBcdTAwMWJbMzFtY29sX2NoYXJhY3RlcigpXHUwMDFiWzM5bSxcbiAgUFVMb2NhdGlvbklEID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW0sXG4gIERPTG9jYXRpb25JRCA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICBwYXltZW50X3R5cGUgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgZmFyZV9hbW91bnQgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgZXh0cmEgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgbXRhX3RheCA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICB0aXBfYW1vdW50ID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW0sXG4gIHRvbGxzX2Ftb3VudCA9IFx1MDAxYlszMm1jb2xfZG91YmxlKClcdTAwMWJbMzltLFxuICBpbXByb3ZlbWVudF9zdXJjaGFyZ2UgPSBcdTAwMWJbMzJtY29sX2RvdWJsZSgpXHUwMDFiWzM5bSxcbiAgdG90YWxfYW1vdW50ID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW0sXG4gIGNvbmdlc3Rpb25fc3VyY2hhcmdlID0gXHUwMDFiWzMybWNvbF9kb3VibGUoKVx1MDAxYlszOW1cbilcbiJ9 -->
+<pre><code>Parsed with column specification:
+cols(
+  VendorID = [32mcol_double()[39m,
+  tpep_pickup_datetime = [34mcol_datetime(format = &quot;&quot;)[39m,
+  tpep_dropoff_datetime = [34mcol_datetime(format = &quot;&quot;)[39m,
+  passenger_count = [32mcol_double()[39m,
+  trip_distance = [32mcol_double()[39m,
+  RatecodeID = [32mcol_double()[39m,
+  store_and_fwd_flag = [31mcol_character()[39m,
+  PULocationID = [32mcol_double()[39m,
+  DOLocationID = [32mcol_double()[39m,
+  payment_type = [32mcol_double()[39m,
+  fare_amount = [32mcol_double()[39m,
+  extra = [32mcol_double()[39m,
+  mta_tax = [32mcol_double()[39m,
+  tip_amount = [32mcol_double()[39m,
+  tolls_amount = [32mcol_double()[39m,
+  improvement_surcharge = [32mcol_double()[39m,
+  total_amount = [32mcol_double()[39m,
+  congestion_surcharge = [32mcol_double()[39m
+)</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI3JlbW92ZSBOQVxuamFuIDwtIG5hLm9taXQoamFuKVxuZmViIDwtIG5hLm9taXQoZmViKVxubWFyIDwtIG5hLm9taXQobWFyKVxuYXByIDwtIG5hLm9taXQoYXByKVxubWF5IDwtIG5hLm9taXQobWF5KVxuanVuIDwtIG5hLm9taXQoanVuKVxuXG4jZmlsdGVyIDEwayByb3dzIHBlciBtb250aFxuamFuIDwtIGphbiAlPiVcbiAgc2FtcGxlX24oMTAwMDAwKVxuXG5mZWIgPC0gZmViICU+JVxuIHNhbXBsZV9uKDEwMDAwMClcblxubWFyIDwtIG1hciAlPiVcbiAgc2FtcGxlX24oMTAwMDAwKVxuXG5hcHIgPC0gYXByICU+JVxuICBzYW1wbGVfbigxMDAwMDApXG5cbm1heSA8LSBtYXkgJT4lXG4gIHNhbXBsZV9uKDEwMDAwMClcblxuanVuIDwtIGp1biAlPiVcbiAgc2FtcGxlX24oMTAwMDAwKVxuYGBgIn0= -->
+<pre class="r"><code>#remove NA
+jan &lt;- na.omit(jan)
+feb &lt;- na.omit(feb)
+mar &lt;- na.omit(mar)
+apr &lt;- na.omit(apr)
+may &lt;- na.omit(may)
+jun &lt;- na.omit(jun)
 
-#february
-feb  &lt;- read_csv('Data/yellow_tripdata_2019-02.csv')
+#filter 10k rows per month
+jan &lt;- jan %&gt;%
+  sample_n(100000)
 
-#march
-mar &lt;- read_csv('Data/yellow_tripdata_2019-03.csv')
+feb &lt;- feb %&gt;%
+ sample_n(100000)
 
-#april
-apr &lt;- read_csv('Data/yellow_tripdata_2019-04.csv')
+mar &lt;- mar %&gt;%
+  sample_n(100000)
 
-#may
-may &lt;- read_csv('Data/yellow_tripdata_2019-05.csv')
+apr &lt;- apr %&gt;%
+  sample_n(100000)
 
-#june
-jun &lt;- read_csv('Data/yellow_tripdata_2019-06.csv')
+may &lt;- may %&gt;%
+  sample_n(100000)
+
+jun &lt;- jun %&gt;%
+  sample_n(100000)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuamFuX2p1biA8LSBmdWxsX2pvaW4oamFuLCBmZWIpICU+JVxuICBmdWxsX2pvaW4obWFyKSAlPiVcbiAgZnVsbF9qb2luKGFwcikgJT4lXG4gIGZ1bGxfam9pbihtYXkpICU+JVxuICBmdWxsX2pvaW4oanVuKVxuYGBgIn0= -->
+<pre class="r"><code>jan_jun &lt;- full_join(jan, feb) %&gt;%
+  full_join(mar) %&gt;%
+  full_join(apr) %&gt;%
+  full_join(may) %&gt;%
+  full_join(jun)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxud3JpdGUuY3N2KGphbl9qdW4sICdqYW5fanVuX3RheGkuY3N2JylcblZpZXcoamFuX2p1bilcbmBgYCJ9 -->
+<pre class="r"><code>write.csv(jan_jun, 'jan_jun_taxi.csv')
+View(jan_jun)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudGVzdCA8LSBqYW4gJT4lXG4gIG5hLm9taXQoKSAlPiVcbiAgZmlsdGVyKHBhc3Nlbmdlcl9jb3VudCA+PSAxKSAlPiVcbiAgZmlsdGVyKFJhdGVjb2RlSUQgPT0gMSkgJT4lXG4gIGZpbHRlcih0cmlwX2Rpc3RhbmNlID4gMCkgJT4lXG4gIGZpbHRlcihmYXJlX2Ftb3VudCA+IDIuNSkgJT4lXG4gIHNhbXBsZV9uKDEwMDApICU+JVxuICBtdXRhdGUoZHVyYXRpb25fbWludXRlcyA9ICh0cGVwX2Ryb3BvZmZfZGF0ZXRpbWUgLSB0cGVwX3BpY2t1cF9kYXRldGltZSkvNjApICU+JVxuICBtdXRhdGUoYXZnX21waCA9ICh0cmlwX2Rpc3RhbmNlL2FzLmRvdWJsZShkdXJhdGlvbl9taW51dGVzKS82MCkpICU+JVxuICBtdXRhdGUoYWRqX3RvdGFsID0gdG90YWxfYW1vdW50IC0gdGlwX2Ftb3VudClcbiAgXG4gIFxuYGBgIn0= -->
+<pre class="r"><code>test &lt;- jan %&gt;%
+  na.omit() %&gt;%
+  filter(passenger_count &gt;= 1) %&gt;%
+  filter(RatecodeID == 1) %&gt;%
+  filter(trip_distance &gt; 0) %&gt;%
+  filter(fare_amount &gt; 2.5) %&gt;%
+  sample_n(1000) %&gt;%
+  mutate(duration_minutes = (tpep_dropoff_datetime - tpep_pickup_datetime)/60) %&gt;%
+  mutate(avg_mph = (trip_distance/as.double(duration_minutes)/60)) %&gt;%
+  mutate(adj_total = total_amount - tip_amount)
+  
+  </code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI215IGZ1bmN0aW9uXG5jbGVhbl9tb250aCA8LSBmdW5jdGlvbihtb250aCl7XG4gIG1vbnRoIDwtIG1vbnRoICU+JVxuICBuYS5vbWl0KCkgJT4lXG4gIGZpbHRlcihwYXNzZW5nZXJfY291bnQgPj0gMSkgJT4lXG4gIGZpbHRlcihSYXRlY29kZUlEID09IDEpICU+JVxuICBmaWx0ZXIodHJpcF9kaXN0YW5jZSA+IDApICU+JVxuICBmaWx0ZXIoZmFyZV9hbW91bnQgPiAyLjUpICU+JVxuICBzYW1wbGVfbigxMDAwMDApICU+JVxuICBtdXRhdGUoZHVyYXRpb25fbWludXRlcyA9ICh0cGVwX2Ryb3BvZmZfZGF0ZXRpbWUgLSB0cGVwX3BpY2t1cF9kYXRldGltZSkvNjApICU+JVxuICBtdXRhdGUoYXZnX21waCA9ICh0cmlwX2Rpc3RhbmNlL2FzLmRvdWJsZShkdXJhdGlvbl9taW51dGVzKS82MCkpICU+JVxuICBtdXRhdGUoYWRqX3RvdGFsID0gdG90YWxfYW1vdW50IC0gdGlwX2Ftb3VudClcbiAgcmV0dXJuKG1vbnRoKVxufVxuYGBgIn0= -->
+<pre class="r"><code>#my function
+clean_month &lt;- function(month){
+  month &lt;- month %&gt;%
+  na.omit() %&gt;%
+  filter(passenger_count &gt;= 1) %&gt;%
+  filter(RatecodeID == 1) %&gt;%
+  filter(trip_distance &gt; 0) %&gt;%
+  filter(fare_amount &gt; 2.5) %&gt;%
+  sample_n(100000) %&gt;%
+  mutate(duration_minutes = (tpep_dropoff_datetime - tpep_pickup_datetime)/60) %&gt;%
+  mutate(avg_mph = (trip_distance/as.double(duration_minutes)/60)) %&gt;%
+  mutate(adj_total = total_amount - tip_amount)
+  return(month)
+}</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuamFuIDwtIGNsZWFuX21vbnRoKGphbilcblxuYGBgIn0= -->
+<pre class="r"><code>jan &lt;- clean_month(jan)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>ratecodeID = 1 passenger count 1-5 trip distance != 0 fare amount &gt; 2.5 trip distance &gt;0</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2phc29ucyBmdW5jdGlvblxuICAgbmEub21pdCgpICU+JVxuICAgIGZpbHRlcihcbiAgICAgIFJhdGVjb2RlSUQgPT0gMSBcbiAgICAgICYgdHJpcF9kaXN0YW5jZSAhPSAwIFxuICAgICAgJiBmYXJlX2Ftb3VudCAhPSAwIFxuICAgICAgJiBwYXNzZW5nZXJfY291bnQgPiAwIFxuICAgICAgJiBwYXNzZW5nZXJfY291bnQgPD0gNSkgJT4lXG4gICAgc2VsZWN0KC1jKFZlbmRvcklELFxuICAgICAgICAgICAgICBzdG9yZV9hbmRfZndkX2ZsYWcsXG4gICAgICAgICAgICAgIGV4dHJhLCBcbiAgICAgICAgICAgICAgbXRhX3RheCwgXG4gICAgICAgICAgICAgIGltcHJvdmVtZW50X3N1cmNoYXJnZSwgXG4gICAgICAgICAgICAgIHRvbGxzX2Ftb3VudCkpICU+JVxuICAgIHNhbXBsZV9uKDEwMDAwMCkgJT4lXG4gICAgbXV0YXRlKFxuICAgICAgcmV2X3RvdGFsID0gdG90YWxfYW1vdW50IC0gdGlwX2Ftb3VudCxcbiAgICAgIGZhcmVfYnlfZGlzdCA9IHRvdGFsX2Ftb3VudCAvIHRyaXBfZGlzdGFuY2UsXG4gICAgICBkZiRwaWNrdXAgPC0gYXMuUE9TSVhjdChhcy5jaGFyYWN0ZXIoZGYkdHBlcF9waWNrdXBfZGF0ZXRpbWUpLCBmb3JtYXQgPVwiJVktJW0tJWQgJUg6JU06JVNcIiksXG4gICAgICBkZiRkcm9wb2ZmIDwtIGFzLlBPU0lYY3QoYXMuY2hhcmFjdGVyKGRmJHRwZXBfZHJvcG9mZl9kYXRldGltZSksIGZvcm1hdCA9XCIlWS0lbS0lZCAlSDolTTolU1wiKSxcbiAgICAgIGRmJGR1cmF0aW9uIDwtIChkZiRkcm9wb2ZmIC0gZGYkcGlja3VwKS82MFxuICAgIClcbmBgYCJ9 -->
+<pre class="r"><code>#jasons function
+   na.omit() %&gt;%
+    filter(
+      RatecodeID == 1 
+      &amp; trip_distance != 0 
+      &amp; fare_amount != 0 
+      &amp; passenger_count &gt; 0 
+      &amp; passenger_count &lt;= 5) %&gt;%
+    select(-c(VendorID,
+              store_and_fwd_flag,
+              extra, 
+              mta_tax, 
+              improvement_surcharge, 
+              tolls_amount)) %&gt;%
+    sample_n(100000) %&gt;%
+    mutate(
+      rev_total = total_amount - tip_amount,
+      fare_by_dist = total_amount / trip_distance,
+      df$pickup &lt;- as.POSIXct(as.character(df$tpep_pickup_datetime), format =&quot;%Y-%m-%d %H:%M:%S&quot;),
+      df$dropoff &lt;- as.POSIXct(as.character(df$tpep_dropoff_datetime), format =&quot;%Y-%m-%d %H:%M:%S&quot;),
+      df$duration &lt;- (df$dropoff - df$pickup)/60
+    )</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBnbG9iYWwgZnVuY3Rpb24gdG8gcHJlcHJvY2VzcyBhbmQgc3Vic2V0IGRhdGFcbmRhdGFfdHJhbnNmb3JtIDwtIGZ1bmN0aW9uKGRmKSB7XG4gIGRmIDwtIGRmICU+JVxuICAgIG5hLm9taXQoKSAlPiVcbiAgICBmaWx0ZXIoXG4gICAgICBSYXRlY29kZUlEID09IDEgXG4gICAgICAmIHRyaXBfZGlzdGFuY2UgPiAwIFxuICAgICAgJiBmYXJlX2Ftb3VudCA+IDIuNSBcbiAgICAgICYgcGFzc2VuZ2VyX2NvdW50ID4gMCBcbiAgICAgICYgcGFzc2VuZ2VyX2NvdW50IDw9IDUpICU+JVxuICAgIHNhbXBsZV9uKDEwMDAwMCkgJT4lXG4gICAgbXV0YXRlKFxuICAgICAgZmFyZV9ieV9kaXN0ID0gdG90YWxfYW1vdW50IC8gdHJpcF9kaXN0YW5jZSxcbiAgICAgIGR1cmF0aW9uID0gKHRwZXBfZHJvcG9mZl9kYXRldGltZSAtIHRwZXBfcGlja3VwX2RhdGV0aW1lKS82MCxcbiAgICAgIGF2Z19tcGggPSAodHJpcF9kaXN0YW5jZS9hcy5kb3VibGUoZHVyYXRpb24pLzYwKSxcbiAgICAgIGFkal90b3RhbCA9IHRvdGFsX2Ftb3VudCAtIHRpcF9hbW91bnRcbiAgICApXG4gIHJldHVybihkZilcbn1cbmBgYCJ9 -->
+<pre class="r"><code># global function to preprocess and subset data
+data_transform &lt;- function(df) {
+  df &lt;- df %&gt;%
+    na.omit() %&gt;%
+    filter(
+      RatecodeID == 1 
+      &amp; trip_distance &gt; 0 
+      &amp; fare_amount &gt; 2.5 
+      &amp; passenger_count &gt; 0 
+      &amp; passenger_count &lt;= 5) %&gt;%
+    sample_n(100000) %&gt;%
+    mutate(
+      fare_by_dist = total_amount / trip_distance,
+      duration = (tpep_dropoff_datetime - tpep_pickup_datetime)/60,
+      avg_mph = (trip_distance/as.double(duration)/60),
+      adj_total = total_amount - tip_amount
+    )
+  return(df)
+}</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuamFuIDwtIGRhdGFfdHJhbnNmb3JtKGphbilcbmZlYiA8LSBkYXRhX3RyYW5zZm9ybShmZWIpXG5tYXIgPC0gZGF0YV90cmFuc2Zvcm0obWFyKVxuYXByIDwtIGRhdGFfdHJhbnNmb3JtKGFwcilcbm1heSA8LSBkYXRhX3RyYW5zZm9ybShtYXkpXG5qdW4gPC0gZGF0YV90cmFuc2Zvcm0oanVuKVxuXG5gYGAifQ== -->
+<pre class="r"><code>jan &lt;- data_transform(jan)
+feb &lt;- data_transform(feb)
+mar &lt;- data_transform(mar)
+apr &lt;- data_transform(apr)
+may &lt;- data_transform(may)
+jun &lt;- data_transform(jun)
 </code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI3JlbW92ZSBOQVxuamFuIDwtIG5hLm9taXQoamFuKVxuXG5gYGAifQ== -->
-<pre class="r"><code>#remove NA
-jan &lt;- na.omit(jan)
-</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuamFuX2p1biA8LSBmdWxsX2pvaW4oamFuLCBmZWIpICU+JVxuICBmdWxsX2pvaW4obWFyKSAlPiVcbiAgZnVsbF9qb2luKGFwcikgJT4lXG4gIGZ1bGxfam9pbihtYXkpICU+JVxuICBmdWxsX2pvaW4oanVuKVxuYGBgIn0= -->
+<pre class="r"><code>jan_jun &lt;- full_join(jan, feb) %&gt;%
+  full_join(mar) %&gt;%
+  full_join(apr) %&gt;%
+  full_join(may) %&gt;%
+  full_join(jun)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiSm9pbmluZywgYnkgPSBjKFwiVmVuZG9ySURcIiwgXCJ0cGVwX3BpY2t1cF9kYXRldGltZVwiLCBcInRwZXBfZHJvcG9mZl9kYXRldGltZVwiLCBcInBhc3Nlbmdlcl9jb3VudFwiLCBcInRyaXBfZGlzdGFuY2VcIiwgXCJSYXRlY29kZUlEXCIsIFwic3RvcmVfYW5kX2Z3ZF9mbGFnXCIsIFwiUFVMb2NhdGlvbklEXCIsIFwiRE9Mb2NhdGlvbklEXCIsIFwicGF5bWVudF90eXBlXCIsIFwiZmFyZV9hbW91bnRcIiwgXCJleHRyYVwiLCBcIm10YV90YXhcIiwgXCJ0aXBfYW1vdW50XCIsIFwidG9sbHNfYW1vdW50XCIsIFwiaW1wcm92ZW1lbnRfc3VyY2hhcmdlXCIsIFwidG90YWxfYW1vdW50XCIsIFwiY29uZ2VzdGlvbl9zdXJjaGFyZ2VcIiwgXCJmYXJlX2J5X2Rpc3RcIiwgXCJkdXJhdGlvblwiLCBcImF2Z19tcGhcIiwgXCJhZGpfdG90YWxcIilKb2luaW5nLCBieSA9IGMoXCJWZW5kb3JJRFwiLCBcInRwZXBfcGlja3VwX2RhdGV0aW1lXCIsIFwidHBlcF9kcm9wb2ZmX2RhdGV0aW1lXCIsIFwicGFzc2VuZ2VyX2NvdW50XCIsIFwidHJpcF9kaXN0YW5jZVwiLCBcIlJhdGVjb2RlSURcIiwgXCJzdG9yZV9hbmRfZndkX2ZsYWdcIiwgXCJQVUxvY2F0aW9uSURcIiwgXCJET0xvY2F0aW9uSURcIiwgXCJwYXltZW50X3R5cGVcIiwgXCJmYXJlX2Ftb3VudFwiLCBcImV4dHJhXCIsIFwibXRhX3RheFwiLCBcInRpcF9hbW91bnRcIiwgXCJ0b2xsc19hbW91bnRcIiwgXCJpbXByb3ZlbWVudF9zdXJjaGFyZ2VcIiwgXCJ0b3RhbF9hbW91bnRcIiwgXCJjb25nZXN0aW9uX3N1cmNoYXJnZVwiLCBcImZhcmVfYnlfZGlzdFwiLCBcImR1cmF0aW9uXCIsIFwiYXZnX21waFwiLCBcImFkal90b3RhbFwiKUpvaW5pbmcsIGJ5ID0gYyhcIlZlbmRvcklEXCIsIFwidHBlcF9waWNrdXBfZGF0ZXRpbWVcIiwgXCJ0cGVwX2Ryb3BvZmZfZGF0ZXRpbWVcIiwgXCJwYXNzZW5nZXJfY291bnRcIiwgXCJ0cmlwX2Rpc3RhbmNlXCIsIFwiUmF0ZWNvZGVJRFwiLCBcInN0b3JlX2FuZF9md2RfZmxhZ1wiLCBcIlBVTG9jYXRpb25JRFwiLCBcIkRPTG9jYXRpb25JRFwiLCBcInBheW1lbnRfdHlwZVwiLCBcImZhcmVfYW1vdW50XCIsIFwiZXh0cmFcIiwgXCJtdGFfdGF4XCIsIFwidGlwX2Ftb3VudFwiLCBcInRvbGxzX2Ftb3VudFwiLCBcImltcHJvdmVtZW50X3N1cmNoYXJnZVwiLCBcInRvdGFsX2Ftb3VudFwiLCBcImNvbmdlc3Rpb25fc3VyY2hhcmdlXCIsIFwiZmFyZV9ieV9kaXN0XCIsIFwiZHVyYXRpb25cIiwgXCJhdmdfbXBoXCIsIFwiYWRqX3RvdGFsXCIpSm9pbmluZywgYnkgPSBjKFwiVmVuZG9ySURcIiwgXCJ0cGVwX3BpY2t1cF9kYXRldGltZVwiLCBcInRwZXBfZHJvcG9mZl9kYXRldGltZVwiLCBcInBhc3Nlbmdlcl9jb3VudFwiLCBcInRyaXBfZGlzdGFuY2VcIiwgXCJSYXRlY29kZUlEXCIsIFwic3RvcmVfYW5kX2Z3ZF9mbGFnXCIsIFwiUFVMb2NhdGlvbklEXCIsIFwiRE9Mb2NhdGlvbklEXCIsIFwicGF5bWVudF90eXBlXCIsIFwiZmFyZV9hbW91bnRcIiwgXCJleHRyYVwiLCBcIm10YV90YXhcIiwgXCJ0aXBfYW1vdW50XCIsIFwidG9sbHNfYW1vdW50XCIsIFwiaW1wcm92ZW1lbnRfc3VyY2hhcmdlXCIsIFwidG90YWxfYW1vdW50XCIsIFwiY29uZ2VzdGlvbl9zdXJjaGFyZ2VcIiwgXCJmYXJlX2J5X2Rpc3RcIiwgXCJkdXJhdGlvblwiLCBcImF2Z19tcGhcIiwgXCJhZGpfdG90YWxcIilKb2luaW5nLCBieSA9IGMoXCJWZW5kb3JJRFwiLCBcInRwZXBfcGlja3VwX2RhdGV0aW1lXCIsIFwidHBlcF9kcm9wb2ZmX2RhdGV0aW1lXCIsIFwicGFzc2VuZ2VyX2NvdW50XCIsIFwidHJpcF9kaXN0YW5jZVwiLCBcIlJhdGVjb2RlSURcIiwgXCJzdG9yZV9hbmRfZndkX2ZsYWdcIiwgXCJQVUxvY2F0aW9uSURcIiwgXCJET0xvY2F0aW9uSURcIiwgXCJwYXltZW50X3R5cGVcIiwgXCJmYXJlX2Ftb3VudFwiLCBcImV4dHJhXCIsIFwibXRhX3RheFwiLCBcInRpcF9hbW91bnRcIiwgXCJ0b2xsc19hbW91bnRcIiwgXCJpbXByb3ZlbWVudF9zdXJjaGFyZ2VcIiwgXCJ0b3RhbF9hbW91bnRcIiwgXCJjb25nZXN0aW9uX3N1cmNoYXJnZVwiLCBcImZhcmVfYnlfZGlzdFwiLCBcImR1cmF0aW9uXCIsIFwiYXZnX21waFwiLCBcImFkal90b3RhbFwiKVxuIn0= -->
+<pre><code>Joining, by = c(&quot;VendorID&quot;, &quot;tpep_pickup_datetime&quot;, &quot;tpep_dropoff_datetime&quot;, &quot;passenger_count&quot;, &quot;trip_distance&quot;, &quot;RatecodeID&quot;, &quot;store_and_fwd_flag&quot;, &quot;PULocationID&quot;, &quot;DOLocationID&quot;, &quot;payment_type&quot;, &quot;fare_amount&quot;, &quot;extra&quot;, &quot;mta_tax&quot;, &quot;tip_amount&quot;, &quot;tolls_amount&quot;, &quot;improvement_surcharge&quot;, &quot;total_amount&quot;, &quot;congestion_surcharge&quot;, &quot;fare_by_dist&quot;, &quot;duration&quot;, &quot;avg_mph&quot;, &quot;adj_total&quot;)Joining, by = c(&quot;VendorID&quot;, &quot;tpep_pickup_datetime&quot;, &quot;tpep_dropoff_datetime&quot;, &quot;passenger_count&quot;, &quot;trip_distance&quot;, &quot;RatecodeID&quot;, &quot;store_and_fwd_flag&quot;, &quot;PULocationID&quot;, &quot;DOLocationID&quot;, &quot;payment_type&quot;, &quot;fare_amount&quot;, &quot;extra&quot;, &quot;mta_tax&quot;, &quot;tip_amount&quot;, &quot;tolls_amount&quot;, &quot;improvement_surcharge&quot;, &quot;total_amount&quot;, &quot;congestion_surcharge&quot;, &quot;fare_by_dist&quot;, &quot;duration&quot;, &quot;avg_mph&quot;, &quot;adj_total&quot;)Joining, by = c(&quot;VendorID&quot;, &quot;tpep_pickup_datetime&quot;, &quot;tpep_dropoff_datetime&quot;, &quot;passenger_count&quot;, &quot;trip_distance&quot;, &quot;RatecodeID&quot;, &quot;store_and_fwd_flag&quot;, &quot;PULocationID&quot;, &quot;DOLocationID&quot;, &quot;payment_type&quot;, &quot;fare_amount&quot;, &quot;extra&quot;, &quot;mta_tax&quot;, &quot;tip_amount&quot;, &quot;tolls_amount&quot;, &quot;improvement_surcharge&quot;, &quot;total_amount&quot;, &quot;congestion_surcharge&quot;, &quot;fare_by_dist&quot;, &quot;duration&quot;, &quot;avg_mph&quot;, &quot;adj_total&quot;)Joining, by = c(&quot;VendorID&quot;, &quot;tpep_pickup_datetime&quot;, &quot;tpep_dropoff_datetime&quot;, &quot;passenger_count&quot;, &quot;trip_distance&quot;, &quot;RatecodeID&quot;, &quot;store_and_fwd_flag&quot;, &quot;PULocationID&quot;, &quot;DOLocationID&quot;, &quot;payment_type&quot;, &quot;fare_amount&quot;, &quot;extra&quot;, &quot;mta_tax&quot;, &quot;tip_amount&quot;, &quot;tolls_amount&quot;, &quot;improvement_surcharge&quot;, &quot;total_amount&quot;, &quot;congestion_surcharge&quot;, &quot;fare_by_dist&quot;, &quot;duration&quot;, &quot;avg_mph&quot;, &quot;adj_total&quot;)Joining, by = c(&quot;VendorID&quot;, &quot;tpep_pickup_datetime&quot;, &quot;tpep_dropoff_datetime&quot;, &quot;passenger_count&quot;, &quot;trip_distance&quot;, &quot;RatecodeID&quot;, &quot;store_and_fwd_flag&quot;, &quot;PULocationID&quot;, &quot;DOLocationID&quot;, &quot;payment_type&quot;, &quot;fare_amount&quot;, &quot;extra&quot;, &quot;mta_tax&quot;, &quot;tip_amount&quot;, &quot;tolls_amount&quot;, &quot;improvement_surcharge&quot;, &quot;total_amount&quot;, &quot;congestion_surcharge&quot;, &quot;fare_by_dist&quot;, &quot;duration&quot;, &quot;avg_mph&quot;, &quot;adj_total&quot;)</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxud3JpdGUuY3N2KGphbl9qdW4sICdqYW5fanVuX3RheGkuY3N2JylcbmBgYCJ9 -->
+<pre class="r"><code>write.csv(jan_jun, 'jan_jun_taxi.csv')</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiRGF0YSBWaXp1YWxpemF0aW9uIEZpbmFsIFByb2plY3QgRXhwbG9yYXRvcnkgQW5hbHlzaXMiCmF1dGhvcjogIkFuZHJldyBUaHZlZHQiCmRhdGU6ICJBcHJpbCAyNSwgMjAyMCIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQpgYGB7cn0KI2xvYWQgcmVxdWlyZWQgcGFja2FnZXMKbGlicmFyeSh0aWR5dmVyc2UpCgpgYGAKCmBgYHtyLCBtZXNzYWdlID0gRkFMU0UsIHdhcm5pbmcgPSBGQUxTRX0KI3JlYWQgZGF0YQpkZiA8LSByZWFkX2NzdignRGF0YS95ZWxsb3dfdHJpcGRhdGFfMjAxOS0xMC5jc3YnKQoKI3ByZXZpZXcgZGF0YQpoZWFkKGRmLCAxMCkKYGBgCgpgYGB7cn0KI3RvdGFsIG1pc3NpbmduZXNzIGluIGRhdGEKc3VtKGlzLm5hKGRmKSkKYGBgCjIzMzYxNSBtaXNzaW5nIG9ic2VydmF0aW9ucyBpbiB0aGUgZGF0YSBmb3Igb2N0b2Jlci4KCmBgYHtyfQojbWlzc2luZ25lc3MgYnkgY29sdW1uCmNvbE1lYW5zKGlzLm5hKGRmKSkqMTAwCmBgYAoKSG93ZXZlciwgdGhlIHBpY2t1cCB0aW1lLCBkcm9wb2ZmIHRpbWUsIHBpY2t1cCBsb2NhdGlvbiwgYW5kIGRyb3BvZmYgbG9jYXRpb24gY29sdW1ucyBoYXZlIDAgbWlzc2luZyBkYXRhLiBNb3N0IG9mIHRoZSBtaXNzaW5nbmVzcyBpcyBpbiB0aGUgVmVuZG9ySUQsIHN0b3JlX2FuZF9md2RfZmxhZywgcGFzc2VuZ2VyX2NvdW50LCBwYXltZW50X3R5cGUsIGFuZCBSYXRlY29kZUlEIGNvbHVtbnMuIFRoaXMgaXMgbm90IGEgYmlnIGlzc3VlIGZvciBvdXIgcHJvamVjdCwgYXMgdGhlc2UgY29sdW1ucyBhcmUgbGVzcyB1c2VmdWwgZm9yIHVzLgoKIyMgTm90ZXMgTW92aW5nIEZvcndhcmQKKiBkb3dubG9hZCBhbmQgbWVyZ2UgdGhlIFRMQyBkYXRhIGNvbnRhaW5pbmcgcGlja3VwIGFuZCBkcm9wb2ZmIHpvbmUgSURzIHdpdGggY3VycmVudCBkZgoqIGdvb2dsZSBBUEkgdG8gZ2V0IGxvbmcvbGF0IGRhdGEgYmFzZWQgb24gcGlja3VwIHpvbmVzCiogbWFwIHBpY2t1cCB6b25lcyAobGVhZmxldD8pIGZvciB2aXN1YWwgcmVwcmVzZW50YXRpb24KCiMgRGF0YSBQcm9jZXNzaW5nCgpgYGB7cn0KI3JlYWQgaW4gamFuLWp1biB5ZWxsb3cgdGF4aSBkYXRhCgojamFudWFyeQpqYW4gPC0gcmVhZF9jc3YoJ0RhdGEveWVsbG93X3RyaXBkYXRhXzIwMTktMDEuY3N2JykKCiNmZWJydWFyeQpmZWIgIDwtIHJlYWRfY3N2KCdEYXRhL3llbGxvd190cmlwZGF0YV8yMDE5LTAyLmNzdicpCgojbWFyY2gKbWFyIDwtIHJlYWRfY3N2KCdEYXRhL3llbGxvd190cmlwZGF0YV8yMDE5LTAzLmNzdicpCgojYXByaWwKYXByIDwtIHJlYWRfY3N2KCdEYXRhL3llbGxvd190cmlwZGF0YV8yMDE5LTA0LmNzdicpCgojbWF5Cm1heSA8LSByZWFkX2NzdignRGF0YS95ZWxsb3dfdHJpcGRhdGFfMjAxOS0wNS5jc3YnKQoKI2p1bmUKanVuIDwtIHJlYWRfY3N2KCdEYXRhL3llbGxvd190cmlwZGF0YV8yMDE5LTA2LmNzdicpCgpgYGAKCgpgYGB7cn0KI3JlbW92ZSBOQQpqYW4gPC0gbmEub21pdChqYW4pCmZlYiA8LSBuYS5vbWl0KGZlYikKbWFyIDwtIG5hLm9taXQobWFyKQphcHIgPC0gbmEub21pdChhcHIpCm1heSA8LSBuYS5vbWl0KG1heSkKanVuIDwtIG5hLm9taXQoanVuKQpgYGAKCg==</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiRGF0YSBWaXp1YWxpemF0aW9uIEZpbmFsIFByb2plY3QgRXhwbG9yYXRvcnkgQW5hbHlzaXMiCmF1dGhvcjogIkFuZHJldyBUaHZlZHQiCmRhdGU6ICJBcHJpbCAyNSwgMjAyMCIKb3V0cHV0OiBodG1sX25vdGVib29rCi0tLQpgYGB7cn0KI2xvYWQgcmVxdWlyZWQgcGFja2FnZXMKbGlicmFyeSh0aWR5dmVyc2UpCnNldC5zZWVkKDEpCmBgYAoKcmF0ZWNvZGVJRCA9IDEKcGFzc2VuZ2VyIGNvdW50IDEtNQp0cmlwIGRpc3RhbmNlICE9IDAKZmFyZSBhbW91bnQgPiAyLjUKdHJpcCBkaXN0YW5jZSA+MAoKd2l0aGluIHpvbmUgdHJpcHMgYXZlcmFnZSBzcGVlZAp0aXAgYnkgem9uZQoKIyBEYXRhIFByb2Nlc3NpbmcKCmBgYHtyfQojcmVhZCBpbiBqYW4tanVuIHllbGxvdyB0YXhpIGRhdGEKCiNqYW51YXJ5CmphbiA8LSByZWFkX2NzdignRGF0YS95ZWxsb3dfdHJpcGRhdGFfMjAxOS0wMS5jc3YnKQoKI2ZlYnJ1YXJ5CmZlYiAgPC0gcmVhZF9jc3YoJ0RhdGEveWVsbG93X3RyaXBkYXRhXzIwMTktMDIuY3N2JykKCiNtYXJjaAptYXIgPC0gcmVhZF9jc3YoJ0RhdGEveWVsbG93X3RyaXBkYXRhXzIwMTktMDMuY3N2JykKCiNhcHJpbAphcHIgPC0gcmVhZF9jc3YoJ0RhdGEveWVsbG93X3RyaXBkYXRhXzIwMTktMDQuY3N2JykKCiNtYXkKbWF5IDwtIHJlYWRfY3N2KCdEYXRhL3llbGxvd190cmlwZGF0YV8yMDE5LTA1LmNzdicpCgojanVuZQpqdW4gPC0gcmVhZF9jc3YoJ0RhdGEveWVsbG93X3RyaXBkYXRhXzIwMTktMDYuY3N2JykKCmBgYAoKCmBgYHtyfQojcmVtb3ZlIE5BCmphbiA8LSBuYS5vbWl0KGphbikKZmViIDwtIG5hLm9taXQoZmViKQptYXIgPC0gbmEub21pdChtYXIpCmFwciA8LSBuYS5vbWl0KGFwcikKbWF5IDwtIG5hLm9taXQobWF5KQpqdW4gPC0gbmEub21pdChqdW4pCgojZmlsdGVyIDEwayByb3dzIHBlciBtb250aApqYW4gPC0gamFuICU+JQogIHNhbXBsZV9uKDEwMDAwMCkKCmZlYiA8LSBmZWIgJT4lCiBzYW1wbGVfbigxMDAwMDApCgptYXIgPC0gbWFyICU+JQogIHNhbXBsZV9uKDEwMDAwMCkKCmFwciA8LSBhcHIgJT4lCiAgc2FtcGxlX24oMTAwMDAwKQoKbWF5IDwtIG1heSAlPiUKICBzYW1wbGVfbigxMDAwMDApCgpqdW4gPC0ganVuICU+JQogIHNhbXBsZV9uKDEwMDAwMCkKYGBgCgpgYGB7cn0KamFuX2p1biA8LSBmdWxsX2pvaW4oamFuLCBmZWIpICU+JQogIGZ1bGxfam9pbihtYXIpICU+JQogIGZ1bGxfam9pbihhcHIpICU+JQogIGZ1bGxfam9pbihtYXkpICU+JQogIGZ1bGxfam9pbihqdW4pCmBgYAoKYGBge3J9CndyaXRlLmNzdihqYW5fanVuLCAnamFuX2p1bl90YXhpLmNzdicpCmBgYAoKYGBge3J9CnRlc3QgPC0gamFuICU+JQogIG5hLm9taXQoKSAlPiUKICBmaWx0ZXIocGFzc2VuZ2VyX2NvdW50ID49IDEpICU+JQogIGZpbHRlcihSYXRlY29kZUlEID09IDEpICU+JQogIGZpbHRlcih0cmlwX2Rpc3RhbmNlID4gMCkgJT4lCiAgZmlsdGVyKGZhcmVfYW1vdW50ID4gMi41KSAlPiUKICBzYW1wbGVfbigxMDAwMDApICU+JQogIG11dGF0ZShkdXJhdGlvbl9taW51dGVzID0gKHRwZXBfZHJvcG9mZl9kYXRldGltZSAtIHRwZXBfcGlja3VwX2RhdGV0aW1lKS82MCkgJT4lCiAgbXV0YXRlKGF2Z19tcGggPSAodHJpcF9kaXN0YW5jZS9hcy5kb3VibGUoZHVyYXRpb25fbWludXRlcykvNjApKSAlPiUKICBtdXRhdGUoYWRqX3RvdGFsID0gdG90YWxfYW1vdW50IC0gdGlwX2Ftb3VudCkKICAKICAKYGBgCgoKYGBge3J9CiNteSBmdW5jdGlvbgpjbGVhbl9tb250aCA8LSBmdW5jdGlvbihtb250aCl7CiAgbW9udGggPC0gbW9udGggJT4lCiAgbmEub21pdCgpICU+JQogIGZpbHRlcihwYXNzZW5nZXJfY291bnQgPj0gMSkgJT4lCiAgZmlsdGVyKFJhdGVjb2RlSUQgPT0gMSkgJT4lCiAgZmlsdGVyKHRyaXBfZGlzdGFuY2UgPiAwKSAlPiUKICBmaWx0ZXIoZmFyZV9hbW91bnQgPiAyLjUpICU+JQogIHNhbXBsZV9uKDEwMDAwMCkgJT4lCiAgbXV0YXRlKGR1cmF0aW9uX21pbnV0ZXMgPSAodHBlcF9kcm9wb2ZmX2RhdGV0aW1lIC0gdHBlcF9waWNrdXBfZGF0ZXRpbWUpLzYwKSAlPiUKICBtdXRhdGUoYXZnX21waCA9ICh0cmlwX2Rpc3RhbmNlL2FzLmRvdWJsZShkdXJhdGlvbl9taW51dGVzKS82MCkpICU+JQogIG11dGF0ZShhZGpfdG90YWwgPSB0b3RhbF9hbW91bnQgLSB0aXBfYW1vdW50KQogIHJldHVybihtb250aCkKfQpgYGAKCmBgYHtyfQpqYW4gPC0gY2xlYW5fbW9udGgoamFuKQoKYGBgCgpyYXRlY29kZUlEID0gMQpwYXNzZW5nZXIgY291bnQgMS01CnRyaXAgZGlzdGFuY2UgIT0gMApmYXJlIGFtb3VudCA+IDIuNQp0cmlwIGRpc3RhbmNlID4wCgoKYGBge3J9CiNqYXNvbnMgZnVuY3Rpb24KICAgbmEub21pdCgpICU+JQogICAgZmlsdGVyKAogICAgICBSYXRlY29kZUlEID09IDEgCiAgICAgICYgdHJpcF9kaXN0YW5jZSAhPSAwIAogICAgICAmIGZhcmVfYW1vdW50ICE9IDAgCiAgICAgICYgcGFzc2VuZ2VyX2NvdW50ID4gMCAKICAgICAgJiBwYXNzZW5nZXJfY291bnQgPD0gNSkgJT4lCiAgICBzZWxlY3QoLWMoVmVuZG9ySUQsCiAgICAgICAgICAgICAgc3RvcmVfYW5kX2Z3ZF9mbGFnLAogICAgICAgICAgICAgIGV4dHJhLCAKICAgICAgICAgICAgICBtdGFfdGF4LCAKICAgICAgICAgICAgICBpbXByb3ZlbWVudF9zdXJjaGFyZ2UsIAogICAgICAgICAgICAgIHRvbGxzX2Ftb3VudCkpICU+JQogICAgc2FtcGxlX24oMTAwMDAwKSAlPiUKICAgIG11dGF0ZSgKICAgICAgcmV2X3RvdGFsID0gdG90YWxfYW1vdW50IC0gdGlwX2Ftb3VudCwKICAgICAgZmFyZV9ieV9kaXN0ID0gdG90YWxfYW1vdW50IC8gdHJpcF9kaXN0YW5jZSwKICAgICAgZGYkcGlja3VwIDwtIGFzLlBPU0lYY3QoYXMuY2hhcmFjdGVyKGRmJHRwZXBfcGlja3VwX2RhdGV0aW1lKSwgZm9ybWF0ID0iJVktJW0tJWQgJUg6JU06JVMiKSwKICAgICAgZGYkZHJvcG9mZiA8LSBhcy5QT1NJWGN0KGFzLmNoYXJhY3RlcihkZiR0cGVwX2Ryb3BvZmZfZGF0ZXRpbWUpLCBmb3JtYXQgPSIlWS0lbS0lZCAlSDolTTolUyIpLAogICAgICBkZiRkdXJhdGlvbiA8LSAoZGYkZHJvcG9mZiAtIGRmJHBpY2t1cCkvNjAKICAgICkKYGBgCgpgYGB7cn0KIyBnbG9iYWwgZnVuY3Rpb24gdG8gcHJlcHJvY2VzcyBhbmQgc3Vic2V0IGRhdGEKZGF0YV90cmFuc2Zvcm0gPC0gZnVuY3Rpb24oZGYpIHsKICBkZiA8LSBkZiAlPiUKICAgIG5hLm9taXQoKSAlPiUKICAgIGZpbHRlcigKICAgICAgUmF0ZWNvZGVJRCA9PSAxIAogICAgICAmIHRyaXBfZGlzdGFuY2UgPiAwIAogICAgICAmIGZhcmVfYW1vdW50ID4gMi41IAogICAgICAmIHBhc3Nlbmdlcl9jb3VudCA+IDAgCiAgICAgICYgcGFzc2VuZ2VyX2NvdW50IDw9IDUpICU+JQogICAgc2FtcGxlX24oMTAwMDAwKSAlPiUKICAgIG11dGF0ZSgKICAgICAgZmFyZV9ieV9kaXN0ID0gdG90YWxfYW1vdW50IC8gdHJpcF9kaXN0YW5jZSwKICAgICAgZHVyYXRpb24gPSAodHBlcF9kcm9wb2ZmX2RhdGV0aW1lIC0gdHBlcF9waWNrdXBfZGF0ZXRpbWUpLzYwLAogICAgICBhdmdfbXBoID0gKHRyaXBfZGlzdGFuY2UvYXMuZG91YmxlKGR1cmF0aW9uKS82MCksCiAgICAgIGFkal90b3RhbCA9IHRvdGFsX2Ftb3VudCAtIHRpcF9hbW91bnQKICAgICkKICByZXR1cm4oZGYpCn0KYGBgCgpgYGB7cn0KamFuIDwtIGRhdGFfdHJhbnNmb3JtKGphbikKZmViIDwtIGRhdGFfdHJhbnNmb3JtKGZlYikKbWFyIDwtIGRhdGFfdHJhbnNmb3JtKG1hcikKYXByIDwtIGRhdGFfdHJhbnNmb3JtKGFwcikKbWF5IDwtIGRhdGFfdHJhbnNmb3JtKG1heSkKanVuIDwtIGRhdGFfdHJhbnNmb3JtKGp1bikKCmBgYAoKYGBge3J9Cmphbl9qdW4gPC0gZnVsbF9qb2luKGphbiwgZmViKSAlPiUKICBmdWxsX2pvaW4obWFyKSAlPiUKICBmdWxsX2pvaW4oYXByKSAlPiUKICBmdWxsX2pvaW4obWF5KSAlPiUKICBmdWxsX2pvaW4oanVuKQpgYGAKCmBgYHtyfQp3cml0ZS5jc3YoamFuX2p1biwgJ2phbl9qdW5fdGF4aS5jc3YnKQpgYGAKCg==</div>
 
 
 

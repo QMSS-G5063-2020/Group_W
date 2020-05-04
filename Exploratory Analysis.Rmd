@@ -7,34 +7,17 @@ output: html_notebook
 ```{r}
 #load required packages
 library(tidyverse)
-
+set.seed(1)
 ```
 
-```{r, message = FALSE, warning = FALSE}
-#read data
-df <- read_csv('Data/yellow_tripdata_2019-10.csv')
+ratecodeID = 1
+passenger count 1-5
+trip distance != 0
+fare amount > 2.5
+trip distance >0
 
-#preview data
-head(df, 10)
-```
-
-```{r}
-#total missingness in data
-sum(is.na(df))
-```
-233615 missing observations in the data for october.
-
-```{r}
-#missingness by column
-colMeans(is.na(df))*100
-```
-
-However, the pickup time, dropoff time, pickup location, and dropoff location columns have 0 missing data. Most of the missingness is in the VendorID, store_and_fwd_flag, passenger_count, payment_type, and RatecodeID columns. This is not a big issue for our project, as these columns are less useful for us.
-
-## Notes Moving Forward
-* download and merge the TLC data containing pickup and dropoff zone IDs with current df
-* google API to get long/lat data based on pickup zones
-* map pickup zones (leaflet?) for visual representation
+within zone trips average speed
+tip by zone
 
 # Data Processing
 
@@ -70,5 +53,150 @@ mar <- na.omit(mar)
 apr <- na.omit(apr)
 may <- na.omit(may)
 jun <- na.omit(jun)
+
+#filter 10k rows per month
+jan <- jan %>%
+  sample_n(100000)
+
+feb <- feb %>%
+ sample_n(100000)
+
+mar <- mar %>%
+  sample_n(100000)
+
+apr <- apr %>%
+  sample_n(100000)
+
+may <- may %>%
+  sample_n(100000)
+
+jun <- jun %>%
+  sample_n(100000)
+```
+
+```{r}
+jan_jun <- full_join(jan, feb) %>%
+  full_join(mar) %>%
+  full_join(apr) %>%
+  full_join(may) %>%
+  full_join(jun)
+```
+
+```{r}
+write.csv(jan_jun, 'jan_jun_taxi.csv')
+```
+
+```{r}
+test <- jan %>%
+  na.omit() %>%
+  filter(passenger_count >= 1) %>%
+  filter(RatecodeID == 1) %>%
+  filter(trip_distance > 0) %>%
+  filter(fare_amount > 2.5) %>%
+  sample_n(100000) %>%
+  mutate(duration_minutes = (tpep_dropoff_datetime - tpep_pickup_datetime)/60) %>%
+  mutate(avg_mph = (trip_distance/as.double(duration_minutes)/60)) %>%
+  mutate(adj_total = total_amount - tip_amount)
+  
+  
+```
+
+
+```{r}
+#my function
+clean_month <- function(month){
+  month <- month %>%
+  na.omit() %>%
+  filter(passenger_count >= 1) %>%
+  filter(RatecodeID == 1) %>%
+  filter(trip_distance > 0) %>%
+  filter(fare_amount > 2.5) %>%
+  sample_n(100000) %>%
+  mutate(duration_minutes = (tpep_dropoff_datetime - tpep_pickup_datetime)/60) %>%
+  mutate(avg_mph = (trip_distance/as.double(duration_minutes)/60)) %>%
+  mutate(adj_total = total_amount - tip_amount)
+  return(month)
+}
+```
+
+```{r}
+jan <- clean_month(jan)
+
+```
+
+ratecodeID = 1
+passenger count 1-5
+trip distance != 0
+fare amount > 2.5
+trip distance >0
+
+
+```{r}
+#jasons function
+   na.omit() %>%
+    filter(
+      RatecodeID == 1 
+      & trip_distance != 0 
+      & fare_amount != 0 
+      & passenger_count > 0 
+      & passenger_count <= 5) %>%
+    select(-c(VendorID,
+              store_and_fwd_flag,
+              extra, 
+              mta_tax, 
+              improvement_surcharge, 
+              tolls_amount)) %>%
+    sample_n(100000) %>%
+    mutate(
+      rev_total = total_amount - tip_amount,
+      fare_by_dist = total_amount / trip_distance,
+      df$pickup <- as.POSIXct(as.character(df$tpep_pickup_datetime), format ="%Y-%m-%d %H:%M:%S"),
+      df$dropoff <- as.POSIXct(as.character(df$tpep_dropoff_datetime), format ="%Y-%m-%d %H:%M:%S"),
+      df$duration <- (df$dropoff - df$pickup)/60
+    )
+```
+
+```{r}
+# global function to preprocess and subset data
+data_transform <- function(df) {
+  df <- df %>%
+    na.omit() %>%
+    filter(
+      RatecodeID == 1 
+      & trip_distance > 0 
+      & fare_amount > 2.5 
+      & passenger_count > 0 
+      & passenger_count <= 5) %>%
+    sample_n(100000) %>%
+    mutate(
+      fare_by_dist = total_amount / trip_distance,
+      duration = (tpep_dropoff_datetime - tpep_pickup_datetime)/60,
+      avg_mph = (trip_distance/as.double(duration)/60),
+      adj_total = total_amount - tip_amount
+    )
+  return(df)
+}
+```
+
+```{r}
+jan <- data_transform(jan)
+feb <- data_transform(feb)
+mar <- data_transform(mar)
+apr <- data_transform(apr)
+may <- data_transform(may)
+jun <- data_transform(jun)
+
+```
+
+```{r}
+jan_jun <- full_join(jan, feb) %>%
+  full_join(mar) %>%
+  full_join(apr) %>%
+  full_join(may) %>%
+  full_join(jun)
+```
+
+```{r}
+write.csv(jan_jun, 'jan_jun_taxi.csv')
 ```
 

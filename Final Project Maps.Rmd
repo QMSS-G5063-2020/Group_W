@@ -1,0 +1,290 @@
+---
+title: "Final Project"
+author: "Andrew Thvedt"
+output:
+  html_document:
+    df_print: paged
+---
+```{r, message = FALSE, warning = FALSE}
+#load required packages
+library(tidyverse)
+library(leaflet)
+library(sp)
+library(sf)
+library(rgdal)
+```
+
+```{r, message = FALSE, warning = FALSE}
+#load data
+df <- read_csv('jan_dec.csv')
+
+#replace Inf values with 0
+df <- df %>%
+  mutate(avg_mph = ifelse(avg_mph == Inf, 0, avg_mph))
+
+#read taxi zone shapefiles
+taxi_zones <- readOGR("taxi_zones/taxi_zones.shp")
+
+#transform polygon
+proj <- spTransform(taxi_zones, '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs')
+
+```
+
+## Map 1 - Average Tip by Pickup Zone
+
+```{r}
+#data manipulation
+df_pu <- df %>%
+  group_by(PULocationID) %>%
+  filter(payment_type == 1) %>% #only filter trips with cc used as payment
+  summarize(passenger_count = mean(passenger_count),
+            fare_amount = mean(fare_amount),
+            trip_distance = mean(trip_distance),
+            extra = mean(extra),
+            mta_tax = mean(mta_tax),
+            tip_amount = mean(tip_amount),
+            tolls_amount = mean(tolls_amount),
+            total_amount = mean(total_amount),
+            fare_by_dist = mean(fare_by_dist),
+            duration = mean(duration),
+            avg_mph = mean(avg_mph),
+            adj_total = mean(adj_total))
+
+#create popup information
+content <- paste("Neighborhood:", taxi_zones$zone, "<br/>",
+                 "Average Tip:", "$", round(df_pu$tip_amount, digits = 2), "<br/>")
+
+#create color palette
+bins <- c(0, 1, 2, 3, 4, 5, 15)
+pal <- colorBin("Greens", domain = df_pu$tip_amount, bins = bins)
+
+#create map
+leaflet(df_pu) %>%
+  addTiles() %>%
+  setView(lng = -73.98928, lat = 40.75042, zoom = 10.2) %>%
+  addProviderTiles("CartoDB.Positron") %>%
+  addPolygons(data = proj,
+              popup = content,
+              weight = 1,
+              fillColor = ~pal(df_pu$tip_amount),
+              fillOpacity = 1,
+              highlightOptions = highlightOptions(
+                color='#000000',
+                weight = 3,
+                bringToFront = TRUE,
+                sendToBack = TRUE),
+              label = taxi_zones$zone) %>%
+  addLegend("topright",
+            pal = pal,
+            values = df_pu$tip_amount,
+            title = "Average Credit Card Tip (USD)",
+            opacity = 1,
+            labFormat = labelFormat(prefix = "$"))
+```
+This map displays the average credit card tip amount for each NYC Yellow Taxi pickup zone. This data was filtered to only include trips payed by credit card, as the NYC TLC dataset does not record cash tips. Interestingly, Manhattan pickup zones have relatively low average tips, while the other boroughs appear to higher average tips generally.
+
+## Map 2 - Average Tip Percent
+
+Though the mapping the average tip data effectively shows the trend of which zones tip higher, a more accurate method of analyzing tips is to analyze by tip percent, since most riders generally tip a percentage of the total trip cost. This map below displays the average tip *percent* by taxi zone. This map tells a similar story to the previous visualization. Fun Fact: the average tip percentage in our dataaset for 2019 is  18%.
+
+```{r}
+#data manipulation
+tips <- df %>%
+  group_by(PULocationID) %>%
+  filter(payment_type == 1) %>% #only filter trips with cc used as payment
+  mutate(tip_percent = tip_amount/(total_amount-tip_amount)*100) %>%
+    summarize(passenger_count = mean(passenger_count),
+            fare_amount = mean(fare_amount),
+            trip_distance = mean(trip_distance),
+            extra = mean(extra),
+            mta_tax = mean(mta_tax),
+            tip_amount = mean(tip_amount),
+            tolls_amount = mean(tolls_amount),
+            total_amount = mean(total_amount),
+            fare_by_dist = mean(fare_by_dist),
+            duration = mean(duration),
+            avg_mph = mean(avg_mph),
+            adj_total = mean(adj_total),
+            tip_percent = mean(tip_percent))
+
+#create popup content
+content <- paste("Neighborhood:", taxi_zones$zone, "<br/>",
+                 "Average Tip Percent:", round(tips$tip_percent, digits = 2), "<br/>")
+
+#create palette for map
+bins <- c(0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55, 60)
+pal <- colorBin("Greens", domain = tips$tip_percent, bins = bins)
+
+#create map
+leaflet(tips) %>%
+  addTiles() %>%
+  setView(lng = -73.98928, lat = 40.75042, zoom = 10.2) %>%
+  addProviderTiles("CartoDB.Positron") %>%
+  addPolygons(data = proj,
+              popup = content,
+              weight = 1,
+              fillColor = ~pal(tips$tip_percent),
+              fillOpacity = 1,
+              highlightOptions = highlightOptions(
+                color='#000000',
+                weight = 3,
+                bringToFront = TRUE,
+                sendToBack = TRUE),
+              label = taxi_zones$zone) %>%
+  addLegend("topright",
+            pal = pal,
+            values = tips$tip_percent,
+            title = "Average Credit Card Tip Percent",
+            opacity = 1)
+```
+
+
+## Map 3 - Median Speed
+
+```{r, warning = FALSE}
+#data manipulation 
+df_within <- df %>%
+  filter(PULocationID == DOLocationID) %>%
+    group_by(PULocationID) %>%
+  summarize(passenger_count = median(passenger_count),
+            fare_amount = median(fare_amount),
+            trip_distance = median(trip_distance),
+            extra = median(extra),
+            mta_tax = median(mta_tax),
+            tip_amount = median(tip_amount),
+            tolls_amount = median(tolls_amount),
+            total_amount = median(total_amount),
+            fare_by_dist = median(fare_by_dist),
+            duration = median(duration),
+            avg_mph = median(avg_mph),
+            adj_total = median(adj_total))
+
+#create popup
+content_mph <- paste("Neighborhood:", taxi_zones$zone, "<br/>")
+
+leaflet(df_within) %>%
+  addTiles() %>%
+  setView(lng = -73.98928, lat = 40.75042, zoom = 10.2) %>%
+  addProviderTiles("CartoDB.Positron") %>%
+  #Average Speed Layer
+  addPolygons(data = proj,
+              popup = content_mph,
+              weight = 1,
+              fillColor = ~colorQuantile("YlOrRd", df_within$avg_mph)(df_within$avg_mph),
+              fillOpacity = 1,
+              highlightOptions = highlightOptions(
+                color='#000000',
+                weight = 3,
+                bringToFront = TRUE,
+                sendToBack = TRUE),
+              label = taxi_zones$zone) %>%
+  addLegend("topright",
+            pal = colorQuantile("YlOrRd", df_within$avg_mph, n = 5),
+            values = df_within$avg_mph,
+            title = "Median Trip Speed (Percentile)",
+            opacity = 1,)
+```
+This map displays the median speed for each taxi zone. Since exact trip route data is not available trips were filtered to include a pickup and a dropoff within the same taxi zone in order to more accurately identify which zones were more congested.
+
+## Map 4 - Average Trip Cost
+```{r, warning = FALSE}
+#create popup
+content_cost <- paste("Neighborhood:", taxi_zones$zone, "<br/>",
+                 "Average Trip Amount:", "$", round(df_within$adj_total, digits = 2), "<br/>")
+
+leaflet(df_within) %>%
+  addTiles() %>%
+  setView(lng = -73.98928, lat = 40.75042, zoom = 10.2) %>%
+  addProviderTiles("CartoDB.Positron") %>%
+  #Average Trip Amount Layer
+  addPolygons(
+              data = proj,
+              popup = content_cost,
+              weight = 1,
+              fillColor = ~colorQuantile("BuGn", df_within$adj_total)(df_within$adj_total),
+              fillOpacity = 1,
+              highlightOptions = highlightOptions(
+                color='#000000',
+                weight = 3,
+                bringToFront = TRUE,
+                sendToBack = TRUE),
+              label = taxi_zones$zone) %>%
+    addLegend("topright",
+            pal = colorQuantile("BuGn", df_within$adj_total, n = 5),
+            values = df_within$adj_total,
+            title = "Average Trip Cost (Without Tips)",
+            opacity = 1,)
+```
+This map uses the same data as the previous map, which selects only trips that have the same pickup and drop off zones. This map displays the average total cost of a trip (minus the tips) for each zone. Given that taxi meters rely on a combination of distance and speed, this map serves as another proxy measure of congestion. The more expensive a trip, the further the taxi traveled and the longer the trip. 
+
+# Map 5 - Pickup and Dropoff Volume
+```{r, warning = FALSE}
+# data manipulation
+df_volume <- df %>%
+  group_by(PULocationID) %>%
+  tally()
+
+df_volume_do <- df %>%
+  group_by(DOLocationID) %>%
+  tally()
+
+
+#create popup contents
+content <- paste("Neighborhood:", taxi_zones$zone, "<br/>",
+                 "Number of Pickups", df_volume$n, "<br/>")
+
+content_do <- paste("Neighborhood:", taxi_zones$zone, "<br/>",
+                 "Number of Dropoffs:", df_volume_do$n, "<br/>")
+
+#create map
+leaflet(df_volume) %>%
+  addTiles() %>%
+  setView(lng = -73.98928, lat = 40.75042, zoom = 10.2) %>%
+  addProviderTiles("CartoDB.Positron") %>%
+  #Pickup Layer
+  addPolygons(group = "Pickups",
+    data = proj,
+              popup = content,
+              weight = 1,
+              fillColor = ~colorQuantile("Blues", df_volume$n)(df_volume$n),
+              fillOpacity = 1,
+              highlightOptions = highlightOptions(
+                color='#000000',
+                weight = 3,
+                bringToFront = TRUE,
+                sendToBack = TRUE),
+              label = taxi_zones$zone) %>%
+  addLegend("topright",
+            group = "Pickups",
+            pal = colorQuantile("Blues", df_volume$n, n = 5),
+            values = df_volume$n,
+            title = "Pickup Volume Percentile",
+            opacity = 1,) %>%
+    addPolygons(group = "Drop Offs",
+    data = proj,
+              popup = content_do,
+              weight = 1,
+              fillColor = ~colorQuantile("Blues", df_volume_do$n)(df_volume_do$n),
+              fillOpacity = 1,
+              highlightOptions = highlightOptions(
+                color='#000000',
+                weight = 3,
+                bringToFront = TRUE,
+                sendToBack = TRUE),
+              label = taxi_zones$zone) %>%
+  addLegend("topright",
+            group = "Drop Offs",
+            pal = colorQuantile("Blues", df_volume_do$n, n = 5),
+            values = df_volume_do$n,
+            title = "Drop Off Volume Percentile",
+            opacity = 1,) %>%
+  addLayersControl(overlayGroups = c("Pickups", "Drop Offs")
+  )
+```
+This final map displays taxi activity. Use the layer filters to display either Pickup or Drop Off Volumes. Click on a taxi zone to display the number of pickups and dropoffs in our dataset.
+
+#Data
+This project relies on data from New York City's Taxi and Limousine Comission (TLC). NYC publishes this TLC data for all trips taken by Yellow Taxis, Green Taxis, For Hire Vehicles, and High Volume for High Vehicles. We rely on the Yellow Taxi data, as this is the transportation method most people use and are familiar with. NYC makes full trip data available starting in 2009, organized by month. Each month contains data on roughly 7 million trips. Given the size of this data, we are choosing to work with only data from 2019. A significant amount of data is available for each trip. The dataset contains information on: pickup and droppoff times, pickup and dropoff locations, rate cod, payment tipe, fare amount, credit card tips, and total amount.
+
+#Project Team
+For this project, Jason and I received permission from Professor Brambor to work in a group of two. The two of us had been planning before this semester begins to work on a project using traffic data from New York City. We also plan to expand on the scope of this project during the summer, applying machine learning models to this dataset. Given these factors, and our shared interest in this topic, working in a group of two is most effective for us.
