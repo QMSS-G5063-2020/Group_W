@@ -153,9 +153,6 @@ all_months <- all_months %>%
 # Replace Inf values with 0
 all_months <- all_months %>%
   mutate(avg_mph = ifelse(avg_mph == Inf, 0, avg_mph))
-
-# Exporta data
-write.csv(all_months, file = "jan_dec.csv", row.names = FALSE)
 ```
 
 
