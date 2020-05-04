@@ -140,6 +140,8 @@ Our group thought it would also be interesting to analyze the duration of weekda
 
 ### Map 1 - Average Tip by Pickup Zone
 
+The following maps present different aspects of Yellow Taxi activity within New York City. These maps are divided into Taxi Zones defined by the city. Map visualizations have the advantage of clearly highlighting features by geography. The first set of maps examines the tipping behavior of passengers organized by pick up zone. The next set looks more broadly at NYC traffic patterns, analyzing which zones were more congested. The final map examines taxi activity as a whole.
+
 ```{r, echo = FALSE}
 #data manipulation
 df_pu <- all_months %>%
@@ -193,7 +195,7 @@ This map displays the average credit card tip amount for each NYC Yellow Taxi pi
 
 ### Map 2 - Average Tip Percent
 
-Though the mapping the average tip data effectively shows the trend of which zones tip higher, a more accurate method of analyzing tips is to analyze by tip percent, since most riders generally tip a percentage of the total trip cost. This map below displays the average tip *percent* by taxi zone. This map tells a similar story to the previous visualization. Fun Fact: the average tip percentage in our dataaset for 2019 is  18%.
+Though mapping average tip data effectively shows the trend of which zones tip higher, a more accurate method of analyzing tips is to analyze by tip percent, since most riders generally tip a percentage of the total trip cost. This map below displays the average tip *percent* by taxi zone. This map tells a similar story to the previous visualization. Fun Fact: the average tip percentage in our dataaset for 2019 is  18%.
 
 ```{r, echo = FALSE, warning = FALSE}
 #data manipulation
@@ -390,4 +392,4 @@ leaflet(df_volume) %>%
   addLayersControl(overlayGroups = c("Pickups", "Drop Offs")
   )
 ```
-This final map displays taxi activity. Use the layer filters to display either Pickup or Drop Off Volumes. Click on a taxi zone to display the number of pickups and dropoffs in our dataset.
+This final map displays taxi activity. Use the layer filters to display either Pickup or Drop Off Volumes. Click on a taxi zone to display the number of pickups and dropoffs in our dataset. Please note: this data relies on a subset of the entire dataset, so the count totals are only a portion of total trips, while the relative data is accurate. Unsurprisingly, Manhattan has many active pickup and dropoff zones. Similarly, JFK Airport and LaGuardia Airport are some of the busiest areas.
