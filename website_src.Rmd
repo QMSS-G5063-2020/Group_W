@@ -25,7 +25,7 @@ library(rgdal)
 all_months <- read_csv('jan_dec.csv')
 
 # Read taxi zone shapefiles
-taxi_zones <- readOGR("data/taxi_zones.shp")
+taxi_zones <- readOGR("data/taxi_zones/taxi_zones.shp")
 
 # Transform polygon
 proj <- spTransform(taxi_zones, '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs')
