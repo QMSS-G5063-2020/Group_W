@@ -146,14 +146,13 @@ all_months$month <- month(all_months$tpep_pickup_datetime, label = TRUE)
 # Creating a separate column for the date
 all_months$date <- date(all_months$tpep_pickup_datetime)
 
-# Exclude variables where the values are negative
+# Exclude values where duration is negative
+all_months <- all_months %>%
+  filter (duration > 0)
 
 # Replace Inf values with 0
 all_months <- all_months %>%
   mutate(avg_mph = ifelse(avg_mph == Inf, 0, avg_mph))
-
-# Exporta data
-write.csv(all_months, file = "jan_dec.csv", row.names = FALSE)
 ```
 
 
