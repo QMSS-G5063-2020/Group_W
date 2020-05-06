@@ -23,7 +23,7 @@ df <- df %>%
   mutate(avg_mph = ifelse(avg_mph == Inf, 0, avg_mph))
 
 #read taxi zone shapefiles
-taxi_zones <- readOGR("taxi_zones/taxi_zones.shp")
+taxi_zones <- readOGR("data/taxi_zones/taxi_zones.shp")
 
 #transform polygon
 proj <- spTransform(taxi_zones, '+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs')
@@ -288,3 +288,88 @@ This project relies on data from New York City's Taxi and Limousine Comission (T
 
 #Project Team
 For this project, Jason and I received permission from Professor Brambor to work in a group of two. The two of us had been planning before this semester begins to work on a project using traffic data from New York City. We also plan to expand on the scope of this project during the summer, applying machine learning models to this dataset. Given these factors, and our shared interest in this topic, working in a group of two is most effective for us.
+
+## Advanced Filtering Function
+```{r}
+zone_volume <- function(zone) {
+  filtered_df <- df %>%
+    filter(PULocationID == zone) %>%
+    group_by(DOLocationID) %>%
+    tally()
+  return(filtered_df)
+}
+
+zone_volume_map <- function(zone_ID) {
+  filtered_df <- df %>%
+    filter(PULocationID == zone_ID) %>%
+    group_by(DOLocationID) %>%
+    tally()
+  
+#create popup contents
+content_do <- paste("Neighborhood:", taxi_zones$zone, "<br/>",
+                 "Number of Dropoffs:", filtered_df$n, "<br/>")
+
+#create map
+leaflet(filtered_df) %>%
+  addTiles() %>%
+  setView(lng = -73.98928, lat = 40.75042, zoom = 10.2) %>%
+  addProviderTiles("CartoDB.Positron") %>%
+    addPolygons(
+    data = proj,
+              popup = content_do,
+              weight = 1,
+              fillColor = ~colorQuantile("Blues", filtered_df$n)(filtered_df$n),
+              fillOpacity = 1,
+              highlightOptions = highlightOptions(
+                color='#000000',
+                weight = 3,
+                bringToFront = TRUE,
+                sendToBack = TRUE),
+              label = taxi_zones$zone) %>%
+  addLegend("topright",
+            pal = colorQuantile("Blues", test$n, n = 5),
+            values = filtered_df$n,
+            title = "Drop Off Volume",
+            opacity = 1)
+}
+```
+
+```{r}
+#test function
+test <- zone_volume(132)
+```
+
+
+```{r}
+zone_volume_map(132)
+```
+
+```{r}
+#create popup contents
+content_do <- paste("Neighborhood:", taxi_zones$zone, "<br/>",
+                 "Number of Dropoffs:", test$n, "<br/>")
+
+#create map
+leaflet(test) %>%
+  addTiles() %>%
+  setView(lng = -73.98928, lat = 40.75042, zoom = 10.2) %>%
+  addProviderTiles("CartoDB.Positron") %>%
+    addPolygons(
+    data = proj,
+              popup = content_do,
+              weight = 1,
+              fillColor = colorNumeric("Blues", test$n)(test$n),
+              fillOpacity = 1,
+              highlightOptions = highlightOptions(
+                color='#000000',
+                weight = 3,
+                bringToFront = TRUE,
+                sendToBack = TRUE),
+              label = taxi_zones$zone) %>%
+  addLegend("topright",
+            pal = colorNumeric("Blues", test$n, n = 5),
+            values = test$n,
+            title = "Drop Off Volume",
+            opacity = 1)
+```
+
