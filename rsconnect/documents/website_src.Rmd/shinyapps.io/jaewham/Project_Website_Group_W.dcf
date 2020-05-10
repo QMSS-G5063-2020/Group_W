@@ -5,8 +5,9 @@ account: jaewham
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 2276728
-bundleId: 3129052
+bundleId: 3129201
 url: https://jaewham.shinyapps.io/Project_Website_Group_W/
-when: 1589148576.96163
+when: 1589152230.39053
 asMultiple: FALSE
 asStatic: FALSE
+ignoredFiles: data/taxi_zones/taxi_zones.shp|jan_dec.csv
