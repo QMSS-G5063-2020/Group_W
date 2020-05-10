@@ -2,6 +2,7 @@
 title: "Project Web Site Group W"
 author: "Jae Woong Ham"
 date: "5/3/2020"
+runtime: shiny
 output: html_document
 ---
 
@@ -9,6 +10,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(rsconnect)
 library(dplyr)
 library(tidyverse)
 library(ggplot2)
@@ -20,6 +22,8 @@ library(leaflet)
 library(sp)
 library(sf)
 library(rgdal)
+library(shiny)
+library(leaflet)
 
 # Load data
 all_months <- read_csv('jan_dec.csv')
@@ -81,12 +85,15 @@ Using ggplots, our group first decided to focus on the duration of the trip. We 
 plot1 <- all_months %>%
   group_by(hour) %>%
   summarise(median_duration = median(as.numeric(duration))) %>%
-  ggplot(aes(hour, median_duration)) +
+  ggplot(aes(x=hour, 
+             y=median_duration,
+             group = 1,
+             text = paste('Hour of day: ',hour,'</br></br>Median duration of trip (in minutes): ',format(median_duration, digits=3))))+
   geom_smooth(method="loess", formula=y ~ x) +
   geom_point(color='midnightblue', size=2) +
   labs(title="Duration of Aggregated Trips over 24 Hours", x="Hour (Military Time)", y="Duration (Minutes)") +
   theme_bw()
-ggplotly(plot1)
+ggplotly(plot1, tooltip=c("text"))
 ```
 From the graph above, the peak rush hour time period is shown to be from 9 a.m. to 6 p.m. with the median duration hovering around 12 minutes, and the duration gradually declines after 6 p.m. The lowest points are around 5 a.m. or 6 a.m.. This is reasonable considering that most people work from 9 a.m. to 6 p.m., and people frequently use cabs throughout the working period in the bustling city of New York.
 
@@ -94,12 +101,15 @@ From the graph above, the peak rush hour time period is shown to be from 9 a.m. 
 plot2 <- all_months %>%
   group_by(day,hour) %>%
   summarise(median_duration = median(as.numeric(duration))) %>%
-  ggplot(aes(x=hour, y=median_duration, group=as.factor(day))) +
+  ggplot(aes(x=hour, 
+             y=median_duration, 
+             group=as.factor(day),
+             text = paste('Hour of day: ',hour,'</br></br>Median duration of trip (in minutes): ',format(median_duration, digits=3))))+
   geom_line(aes(color=as.factor(day))) +
   labs(title="Duration of Aggregated Trips over 24 Hours Sorted by Day of Week", x="Hour (Military Time)", y="Duration (Minutes)") +
   guides(color=guide_legend("Day")) +
   theme_bw()
-ggplotly(plot2)
+ggplotly(plot2, tooltip=c("text"))
 ```
 Our group further dissected the duration over a day by comparing its trends by the day of the week. One can clearly see how weekdays follow a similar trend of following a sharp increase in duration of trips from 7 a.m. to 12 p.m., which is followed by a gradual decline. This effect is similar to the aggregated graph above, but the effect is more pronounced and the rush hour seems to start earlier. However, there is a clear difference in this trend when looking at the weekends; Saturday and Sunday both follow a gradual increase from 7 a.m. to 7 p.m. (Saturday) or 3 p.m. (Sunday). As such, one can clearly see people start their day more slowly on these days.
 
@@ -110,12 +120,15 @@ Note: you can selectively click on a single day by double clicking on the desire
 plot3 <- all_months %>%
   group_by(day) %>%
   summarise(median_duration = median(as.numeric(duration))) %>%
-  ggplot(aes(as.factor(day), median_duration)) +
+  ggplot(aes(x=as.factor(day), 
+             y=median_duration,
+             group=1,
+             text = paste('Day of week: ',day,'</br></br>Median duration of trip (in minutes): ',format(median_duration, digits=3))))+
   geom_point(color='midnightblue', size=2) +
-  #geom_bar(stat="identity")+
+  geom_line() +
   labs(title="Duration of Aggregated Trips over Days of Week", x="Day of the Week", y="Duration (Minutes)") +
   theme_bw()
-ggplotly(plot3)
+ggplotly(plot3, tooltip=c("text"))
 ```
 Now, we shifted gears to study how the duration varies by the day of the week. This almosts seems like a normal distribution curve with Monday and Sunday having the two lowest duration (10.5 and 10 minutes), while Thursday marks the highest peak with around 12 minutes in duration. This trend was also reflected in the overall trend in previous graph when comparing day to day with Thursday having the highest duration on average, while Sunday had the lowest.
 
@@ -123,12 +136,15 @@ Now, we shifted gears to study how the duration varies by the day of the week. T
 plot4 <- all_months %>%
   group_by(month,day) %>%
   summarise(median_duration = median(as.numeric(duration))) %>%
-  ggplot(aes(x=day, y=median_duration, fill=as.factor(month))) + 
+  ggplot(aes(x=day, 
+             y=median_duration, 
+             fill=as.factor(month),
+             text = paste('Day of week: ',day,'</br></br>Median duration of trip (in minutes): ',format(median_duration, digits=3))))+ 
   geom_bar(stat="identity", width=0.7, position=position_dodge()) +
   labs(title="Duration of Aggregated Trips over 24 Hours Sorted by Month", x="Day of Week", y="Duration (Minutes)") +
   guides(fill=guide_legend("Month")) +
   theme_bw()
-ggplotly(plot4)
+ggplotly(plot4, tooltip=c("text"))
 ```
 Our group thought it would also be interesting to analyze the duration of weekdays by month, and compare month to month. It seems like June and October consistently share the highest peak throughout the days of the week, in general. This may be attributed to major holidays (i.e. summer break) or the start of schools (i.e. fall semester for universities), where people tend to travel more than other months of the year. In terms of day to day, thursday seem to have the highest duration of trips over any other day of the week, and Sunday have the lowest. This pattern is consistent with what we saw with the graph above.
 
@@ -392,3 +408,54 @@ leaflet(df_volume) %>%
   )
 ```
 This final map displays taxi activity. Use the layer filters to display either Pickup or Drop Off Volumes. Click on a taxi zone to display the number of pickups and dropoffs in our dataset. Please note: this data relies on a subset of the entire dataset, so the count totals are only a portion of total trips, while the relative data is accurate. Unsurprisingly, Manhattan has many active pickup and dropoff zones. Similarly, JFK Airport and LaGuardia Airport are some of the busiest areas.
+
+```{r}
+ui <- fluidPage(
+  titlePanel("Traffic Volumn Analysis"),
+  mainPanel(
+    leafletOutput("map"),
+    br(), br()),
+    sidebarPanel(
+    ### User chooses the species to map
+    selectInput("location", "Starting Area Location",
+      unique(all_months$PULocationID))
+  ))
+
+server <- function(input, output, session) {
+  output$map <- renderLeaflet({
+    filtered_df <- 
+      all_months %>%
+      filter(PULocationID == input$location) %>%
+      group_by(DOLocationID) %>%
+      tally()
+    
+    #create popup contents
+    content_do <- paste("Neighborhood:", taxi_zones$zone, "<br/>",
+                     "Number of Dropoffs:", filtered_df$n, "<br/>")
+    #create map
+    leaflet(filtered_df) %>%
+      addTiles() %>%
+      setView(lng = -73.98928, lat = 40.75042, zoom = 10.2) %>%
+      addProviderTiles("CartoDB.Positron") %>%
+        addPolygons(
+        data = proj,
+                  popup = content_do,
+                  weight = 1,
+                  fillColor = ~colorQuantile("Blues", filtered_df$n)(filtered_df$n),
+                  fillOpacity = 1,
+                  highlightOptions = highlightOptions(
+                    color='#000000',
+                    weight = 3,
+                    bringToFront = TRUE,
+                    sendToBack = TRUE),
+                  label = taxi_zones$zone) %>%
+      addLegend("topright",
+                pal = colorQuantile("Blues", filtered_df$n, n = 5),
+                values = filtered_df$n,
+                title = "Drop Off Volume",
+                opacity = 1)
+  })
+}
+
+shinyApp(ui, server)
+```
