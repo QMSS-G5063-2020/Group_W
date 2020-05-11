@@ -157,7 +157,11 @@ all_months <- all_months %>%
 
 
 
-# Univariate Analysis
+### Exploratory Data Analysis
+Before diving into our final design, our group wanted to first explore and understand the variables. This was done in the following steps. We first conducted a univariate analysis of the variables of interest. 
+
+
+### Univariate Analysis
 
 ```{r}
 plot1 <- ggplot(data=all_months, aes(x=as.numeric(duration)))+
