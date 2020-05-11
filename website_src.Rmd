@@ -416,6 +416,9 @@ leaflet(df_volume) %>%
 ```
 This final map displays taxi activity. Use the layer filters to display either Pickup or Drop Off Volumes. Click on a taxi zone to display the number of pickups and dropoffs in our dataset. Please note: this data relies on a subset of the entire dataset, so the count totals are only a portion of total trips, while the relative data is accurate. Unsurprisingly, Manhattan has many active pickup and dropoff zones. Similarly, JFK Airport and LaGuardia Airport are some of the busiest areas.
 
+
+
+
 ```{r}
 ui <- fluidPage(
   titlePanel("Traffic Volumn Analysis"),
