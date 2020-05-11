@@ -175,3 +175,6 @@ all_months <- all_months %>%
 all_months <- all_months %>%
   mutate(avg_mph = ifelse(avg_mph == Inf, 0, avg_mph))
 ```
+
+### Concluding Remarks
+From this point, our group wanted to explore various variables of interest that help us tell a compelling story and provide the reader with important insights. We were fortunate that there weren't that many variables within the original dataset. As such, it was clear which variables to choose. These were trip duration, tip amount, trip fare, and trip distance, in additon to our custom variables mentioned earlier. Our final work included these variables of interest, and each variable was tailored to the most appropriate visualization given the context. Our final outputs can be found in our main website. Thank you.
