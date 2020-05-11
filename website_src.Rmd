@@ -57,6 +57,11 @@ all_months$date <- date(all_months$tpep_pickup_datetime)
 all_months <- all_months %>%
   mutate(avg_mph = ifelse(avg_mph == Inf, 0, avg_mph))
 
+#add column containing names
+zone_df <- as.data.frame(taxi_zones) %>%
+  select("LocationID", "zone")
+
+all_months$PUzone <- zone_df$zone[match(all_months$PULocationID, zone_df$LocationID)]
 # Exclude values where duration is negative
 all_months <- all_months %>%
   filter (duration > 0)
@@ -428,46 +433,64 @@ ui <- fluidPage(
     sidebarPanel(
     ### User chooses the species to map
     selectInput("location", "Starting Area Location",
-      unique(all_months$PULocationID))
+      unique(all_months$PUzone))
   ))
 
 server <- function(input, output, session) {
   output$map <- renderLeaflet({
     filtered_df <- 
       all_months %>%
-      filter(PULocationID == input$location) %>%
+      filter(PUzone == input$location) %>%
       group_by(DOLocationID) %>%
       tally()
+    
+    if(nrow(filtered_df) < 5){stop("Not enough unique dropoff locations from this origin point. Please select another starting point.")}
     
     #create popup contents
     content_do <- paste("Neighborhood:", taxi_zones$zone, "<br/>",
                      "Number of Dropoffs:", filtered_df$n, "<br/>")
+    #filter second projection
+  proj2 <- subset(proj, proj$zone %in% input$location)
+
+    #create pal
+pal <- colorNumeric(
+  palette = "Blues",
+  domain = filtered_df$n)
+    
     #create map
     leaflet(filtered_df) %>%
       addTiles() %>%
-      setView(lng = -73.98928, lat = 40.75042, zoom = 10.2) %>%
-      addProviderTiles("CartoDB.Positron") %>%
-        addPolygons(
-        data = proj,
-                  popup = content_do,
-                  weight = 1,
-                  fillColor = ~colorQuantile("Blues", filtered_df$n)(filtered_df$n),
-                  fillOpacity = 1,
-                  highlightOptions = highlightOptions(
-                    color='#000000',
-                    weight = 3,
-                    bringToFront = TRUE,
-                    sendToBack = TRUE),
-                  label = taxi_zones$zone) %>%
-      addLegend("topright",
-                pal = colorQuantile("Blues", filtered_df$n),
-                values = filtered_df$n,
-                title = "Drop Off Volume",
-                opacity = 1)
+  setView(lng = -73.98928, lat = 40.75042, zoom = 10.2) %>%
+  addProviderTiles("CartoDB.Positron") %>%
+    addPolygons(
+    data = proj,
+              popup = content_do,
+              weight = 1,
+              fillColor = ~pal(filtered_df$n),
+              fillOpacity = 1,
+              highlightOptions = highlightOptions(
+                color='#000000',
+                weight = 3,
+                bringToFront = TRUE,
+                sendToBack = TRUE),
+              label = taxi_zones$zone) %>%
+       addPolygons(data = proj2,
+              weight = 1,
+              color = "Red",
+              fill = "Red") %>%
+  addLegend("topright",
+            pal = pal,
+            values = filtered_df$n,
+            title = "Drop Off Volume",
+            opacity = 1)
   })
 }
 
 shinyApp(ui, server)
+
 ```
 
-test
+```{r}
+
+```
+
