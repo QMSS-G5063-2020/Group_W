@@ -21,6 +21,8 @@ After discussing and exploring this data further, we ultimately decided to only 
 
 Working with NYC taxi data revealed interesting features of taxi behavior and traffic more broadly. For example, our dataset and visualizations showed that, unsurprisngly, JFK Airport is the busiest taxi pickup zone. The map visualizations also confirmed that Manhattan is consistently the most congested area in New York. Other maps also revealed interesting features of tipping behavior, namely that many people in the outer boroughs prefered to tip with cash than with credit cards. In Manhattan, however, credit card tips were significantly more common and of greater value. Other visualizations showed showed the peak trip duration occured around 1-2pm and how taxi behavior differed on the weekends from the weekdays. We also learned that the most congested day of the week, measured by average trip duration, was Thursday. Though many of these findings are unsurprising, the strong dataset behind these conclusions confirms many intuitions about New York City traffic and Taxi data.
 
+Moving forward, Jason and I plan to continue to work with this dataset. The next step is to begin working with the full set of NYC taxi data. In order to do this, we will use SQL to query Google's BigQuery service, which contains NYC taxi data. This will allow us to acces the relevant data based on a user's input without having to store hundreds of millions of observations on our computers or a server. Once this process has been completed, we will then move to further integrating our code using online hosting. Using Amazon servers, we can host our code in a way that allows us to create a more living and interactive website. This will allow a user to select the parameters they are interested in, create interactive visualizations using only the necessary data, and display this information. Once we have developed this, we plan to apply machine learning to this dataset. Though further exploration is necessary, our current plans are to use this data, and integrate other data sources such as the weather, to predict traffic and taxi behavior in the future.
+
 # Map Creation
 
 After processing the data and creating a master dataset which our project will stem from, I first read in the data. Since some of the new variables contain Inf values, I replace these with 0. I then read in the taxi zone shapefiles, which are available online from the NYC TLC data website. After reading in the shapefiles, I then used the spTransform() function to be able to map these in leaflet.
@@ -31,6 +33,12 @@ df <- read_csv('jan_dec.csv')
 #replace Inf values with 0
 df <- df %>%
   mutate(avg_mph = ifelse(avg_mph == Inf, 0, avg_mph))
+
+#add column containing names
+zone_df <- as.data.frame(taxi_zones) %>%
+  select("LocationID", "zone")
+
+df$PUzone <- zone_df$zone[match(df$PULocationID, zone_df$LocationID)]
 
 #read taxi zone shapefiles
 taxi_zones <- readOGR("data/taxi_zones/taxi_zones.shp")
@@ -309,6 +317,9 @@ This project relies on data from New York City's Taxi and Limousine Commission (
 #Project Team
 For this project, Jason and I received permission from Professor Brambor to work in a group of two. The two of us had been planning before this semester begins to work on a project using traffic data from New York City. We also plan to expand on the scope of this project during the summer, applying machine learning models to this dataset. Given these factors, and our shared interest in this topic, working in a group of two is most effective for us.
 
+#Interactive Filtering Map
+Our team created a function and shiny application to produce an user interactive map. This map calculates and displays the total number of dropoffs given a pickup location. The user is able to select a specific pickup zone in a drop down menu and the map then highlights that given zone as the origin point in red and displays the number of dropoffs in each of the other zones. We first used colorQuantile in order to have a more accurate distribution of the relative activity between each zone. Howewver, since we are working with a filtered dataset, this would cause errors when selecting a zone with very few total trips. This resulted in each dropoff zone having on average 1-2 trips, which would cause an error in how the color pallete was created. We then used colorNumeric to represent the same data and this solved the problem. This allowed us to map the relative even for low traffic zones. However, in the lowest traffic zones, where there were no more than 1 dropoff per zone, the map and legend could not properly display this data. Given this error, we added a stop function to the function within the Shiny app which would alert the user of the error and prompt them to select another origin point.
+
 ## Advanced Filtering Function
 ```{r}
 zone_volume <- function(zone) {
@@ -328,6 +339,13 @@ zone_volume_map <- function(zone_ID) {
 #create popup contents
 content_do <- paste("Neighborhood:", taxi_zones$zone, "<br/>",
                  "Number of Dropoffs:", filtered_df$n, "<br/>")
+#filter second projection
+proj2 <- subset(proj, proj$LocationID %in% zone_ID)
+
+#create pal
+pal <- colorNumeric(
+  palette = "Blues",
+  domain = filtered_df$n)
 
 #create map
 leaflet(filtered_df) %>%
@@ -338,7 +356,7 @@ leaflet(filtered_df) %>%
     data = proj,
               popup = content_do,
               weight = 1,
-              fillColor = ~colorQuantile("Blues", filtered_df$n)(filtered_df$n),
+              fillColor = ~pal(filtered_df$n),
               fillOpacity = 1,
               highlightOptions = highlightOptions(
                 color='#000000',
@@ -346,8 +364,12 @@ leaflet(filtered_df) %>%
                 bringToFront = TRUE,
                 sendToBack = TRUE),
               label = taxi_zones$zone) %>%
+   addPolygons(data = proj2,
+              weight = 1,
+              color = "Red",
+              fill = "Red") %>%
   addLegend("topright",
-            pal = colorQuantile("Blues", test$n, n = 5),
+            pal = pal,
             values = filtered_df$n,
             title = "Drop Off Volume",
             opacity = 1)
@@ -355,14 +377,12 @@ leaflet(filtered_df) %>%
 ```
 
 ```{r}
-#test function
-test <- zone_volume(132)
+  testdfdf <- df %>%
+    filter(PULocationID == 240) %>%
+    group_by(DOLocationID) %>%
+    tally()
 ```
 
-
-```{r}
-zone_volume_map(132)
-```
 
 ```{r}
 #create popup contents
@@ -392,4 +412,3 @@ leaflet(test) %>%
             title = "Drop Off Volume",
             opacity = 1)
 ```
-
