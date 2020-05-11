@@ -2,8 +2,15 @@
 title: "Project Web Site Group W"
 author: "Jae Woong Ham"
 date: "5/3/2020"
-runtime: shiny
 output: html_document
+runtime: shiny
+resource_files:
+- taxi_zones/.DS_Store
+- taxi_zones/taxi_zones.prj
+- taxi_zones/taxi_zones.sbn
+- taxi_zones/taxi_zones.sbx
+- taxi_zones/taxi_zones.shp.xml
+- taxi_zones/taxi_zones.shx
 ---
 
 # Final Project: NYC Taxi Data {.tabset .tabset-pills}
@@ -450,7 +457,7 @@ server <- function(input, output, session) {
                     sendToBack = TRUE),
                   label = taxi_zones$zone) %>%
       addLegend("topright",
-                pal = colorQuantile("Blues", filtered_df$n, n = 5),
+                pal = colorQuantile("Blues", filtered_df$n),
                 values = filtered_df$n,
                 title = "Drop Off Volume",
                 opacity = 1)
