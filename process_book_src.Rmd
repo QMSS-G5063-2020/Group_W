@@ -35,18 +35,18 @@ library(lubridate)
 
 ```{r}
 # importing data
-jan_data <- read_csv("data/yellow_tripdata_2019-01.csv")
-feb_data <- read_csv("data/yellow_tripdata_2019-02.csv")
-mar_data <- read_csv("data/yellow_tripdata_2019-03.csv")
-apr_data <- read_csv("data/yellow_tripdata_2019-04.csv")
-may_data <- read_csv("data/yellow_tripdata_2019-05.csv")
-jun_data <- read_csv("data/yellow_tripdata_2019-06.csv")
+#jan_data <- read_csv("data/yellow_tripdata_2019-01.csv")
+#feb_data <- read_csv("data/yellow_tripdata_2019-02.csv")
+#mar_data <- read_csv("data/yellow_tripdata_2019-03.csv")
+#apr_data <- read_csv("data/yellow_tripdata_2019-04.csv")
+#may_data <- read_csv("data/yellow_tripdata_2019-05.csv")
+#jun_data <- read_csv("data/yellow_tripdata_2019-06.csv")
 july_data <- read_csv("data/yellow_tripdata_2019-07.csv")
-aug_data <- read_csv("data/yellow_tripdata_2019-08.csv")
-sep_data <- read_csv("data/yellow_tripdata_2019-09.csv")
+#aug_data <- read_csv("data/yellow_tripdata_2019-08.csv")
+#sep_data <- read_csv("data/yellow_tripdata_2019-09.csv")
 oct_data <- read_csv("data/yellow_tripdata_2019-10.csv")
-nov_data <- read_csv("data/yellow_tripdata_2019-11.csv")
-dec_data <- read_csv("data/yellow_tripdata_2019-12.csv")
+#nov_data <- read_csv("data/yellow_tripdata_2019-11.csv")
+#dec_data <- read_csv("data/yellow_tripdata_2019-12.csv")
 ```
 
 Upon first glance, the dataset seems largely complete. However, since this dataset has millions of observations, our group wanted to calculate the number of missing observations to get a more accurate sense of this dataset.
@@ -131,24 +131,24 @@ We then merged all the dataframes, and exported the data so that we have a maste
 
 ```{r}
 # applying function to preprocess and subset data
-jan_rev <- data_transform(jan_data)
-feb_rev <- data_transform(feb_data)
-mar_rev <- data_transform(mar_data)
-apr_rev <- data_transform(apr_data)
-may_rev <- data_transform(may_data)
-jun_rev <- data_transform(jun_data)
-july_rev <- data_transform(july_data)
-aug_rev <- data_transform(aug_data)
-sep_rev <- data_transform(sep_data)
-oct_rev <- data_transform(oct_data)
-nov_rev <- data_transform(nov_data)
-dec_rev <- data_transform(dec_data)
+#jan_rev <- data_transform(jan_data)
+#feb_rev <- data_transform(feb_data)
+#mar_rev <- data_transform(mar_data)
+#apr_rev <- data_transform(apr_data)
+#may_rev <- data_transform(may_data)
+#jun_rev <- data_transform(jun_data)
+#july_rev <- data_transform(july_data)
+#aug_rev <- data_transform(aug_data)
+#sep_rev <- data_transform(sep_data)
+#oct_rev <- data_transform(oct_data)
+#nov_rev <- data_transform(nov_data)
+#dec_rev <- data_transform(dec_data)
 
 # merging all of the dataframes
-all_months <- do.call("rbind", list(jan_rev, feb_rev, mar_rev, apr_rev, may_rev, jun_rev, july_rev, aug_rev, sep_rev, oct_rev, nov_rev, dec_rev))
+#all_months <- do.call("rbind", list(jan_rev, feb_rev, mar_rev, apr_rev, may_rev, jun_rev, july_rev, aug_rev, sep_rev, oct_rev, nov_rev, dec_rev))
 
 # export data
-write.csv(all_months, file = "jan_dec.csv", row.names = FALSE)
+#write.csv(all_months, file = "jan_dec.csv", row.names = FALSE)
 ```
 
 ### Further Refining and Scrubbing the Dataset
@@ -156,6 +156,9 @@ write.csv(all_months, file = "jan_dec.csv", row.names = FALSE)
 However, our group found ourselves further refining the dataset. As you may know, the preprocessing stage takes up majority of the time for any data science projects. These steps are more minor in comparison to the last stage, and each step is annotated in the code block below.
 
 ```{r}
+# Load data from previously created master dataframe
+all_months <- read_csv('jan_dec.csv')
+
 # Creating a separate column for hour of the day
 all_months$hour <- hour(all_months$tpep_pickup_datetime)
 
@@ -181,6 +184,6 @@ all_months <- all_months %>%
 
 From this point, our group wanted to explore various variables of interest that help us tell a compelling story and provide the reader with important insights. We were fortunate that there weren't that many variables within the original dataset. As such, it was clear which variables to choose. These were trip duration, tip amount, trip fare, and trip distance, in addition to our custom variables mentioned earlier. Our final work included these variables of interest, and each variable was tailored to the most appropriate visualization given the context. Our final outputs can be found in our main website. Please note that our interactive map built with Shiny is on a separate webpage from our other visualizations. We were forced to separate these visualizations due to a compatibility issue. The shinyapps.io website does not support uploading html interactive objects and the Rpubs website does not allow us to upload Shiny applications. Thus, we were forced to include these visualizations separately.
 
-Moving forward, Jason and I plan to continue to work with this dataset. The next step is to begin working with the full set of NYC taxi data. In order to do this, we will use SQL to query Google's BigQuery service, which contains NYC taxi data. This will allow us to aces the relevant data based on a user's input without having to store hundreds of millions of observations on our computers or a server. Once this process has been completed, we will then move to further integrating our code using online hosting. Using Amazon servers, we can host our code in a way that allows us to create a more living and interactive website. This will allow a user to select the parameters they are interested in, create interactive visualizations using only the necessary data, and display this information. Once we have developed this, we plan to apply machine learning to this dataset. Though further exploration is necessary, our current plans are to use this data, and integrate other data sources such as the weather, to predict traffic and taxi behavior in the future.
+Moving forward, our group plan to continue to work with this dataset. The next step is to begin working with the full set of NYC taxi data. In order to do this, we will use SQL to query Google's BigQuery service, which contains NYC taxi data via their live API service. This will allow us to aces the relevant data based on a user's input without having to store hundreds of millions of observations on our computers or a server. Once this process has been completed, we will then move to further integrating our code using cloud services. Using AWS, we can host our code in a way that allows us to create a more living and interactive website. This will allow a user to select the parameters they are interested in, create interactive visualizations using only the necessary data, and display this information. Once we have developed this, we plan to apply machine learning to this dataset, and build a predictive model that will forecast estimated duration and cost of the trip based on pickup and desired drop off location.
 
- Thank you.
+Thank you.

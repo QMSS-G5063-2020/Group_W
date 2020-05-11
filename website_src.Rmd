@@ -1,6 +1,6 @@
 ---
 title: "Project Web Site Group W"
-author: "Jae Woong Ham & Andrew "
+author: "Jae Woong Ham &Andrew Thvedt"
 date: "5/3/2020"
 output: html_document
 resource_files:
@@ -82,13 +82,13 @@ Our website is primarily split into two major portions. For the first part of ou
 
 Please keep in mind that all the graphs are interactive in nature, expect for the exploratory data analysis section. Instead of focusing a specific variable, our group thought it would be more useful to give user the control to use the already-available insights from the visualization based on his/her individual needs, either in the perspective of the consumer or taxi driver. Moreover, for interactive leaflet graph, one needs to not only hover over the area of interest, but also click on the area to display greater information about the area pertaining to the relevant variables of the map.
 
-Our team would also like to point out that all the preprocessing and data scrubbing, as well as exploratory data analysis, are included as part of our process book, and is excluded from this section. This website only includes our final data viusalization outputs, in accordance with the instructions laid out in the class website.
+Our team would also like to point out that the majority of the preprocessing and data scrubbing, as well as exploratory data analysis, are included as part of our process book, and is excluded from this section. This website only includes our final data viusalization outputs, in accordance with the instructions laid out in the class website.
 
 When aggregating data, our team used median for all variables, apart from tip amounts. This was done because the data contained a reasonable number of outliers that might skew the average during aggregation. As such, we determined median was the best method to most accurately capture the insights from the data relevant to the variables of interest.
 
 ### Other Links
 
-Process Book:
+Process Book: https://rpubs.com/jaeham/groupw_process_book
 
 Brief Presentation:
 
