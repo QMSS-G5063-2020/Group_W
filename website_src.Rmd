@@ -53,6 +53,12 @@ all_months <- all_months %>%
 # Exclude values where duration is negative
 all_months <- all_months %>%
   filter (duration > 0)
+
+#add column containing names
+zone_df <- as.data.frame(taxi_zones) %>%
+  select("LocationID", "zone")
+
+all_months$PUzone <- zone_df$zone[match(all_months$PULocationID, zone_df$LocationID)]
 ```
 
 ## Introduction
@@ -411,37 +417,48 @@ This final map displays taxi activity. Use the layer filters to display either P
 
 ```{r}
 ui <- fluidPage(
-  titlePanel("Traffic Volumn Analysis"),
+  titlePanel("Traffic Volume Analysis"),
   mainPanel(
     leafletOutput("map"),
     br(), br()),
     sidebarPanel(
     ### User chooses the species to map
     selectInput("location", "Starting Area Location",
-      unique(all_months$PULocationID))
+      unique(all_months$PUzone))
   ))
 
 server <- function(input, output, session) {
   output$map <- renderLeaflet({
     filtered_df <- 
       all_months %>%
-      filter(PULocationID == input$location) %>%
+      filter(PUzone == input$location) %>%
       group_by(DOLocationID) %>%
       tally()
     
     #create popup contents
     content_do <- paste("Neighborhood:", taxi_zones$zone, "<br/>",
                      "Number of Dropoffs:", filtered_df$n, "<br/>")
+    
+    #create pal
+    pal <- colorNumeric(
+    palette = "Blues",
+    domain = filtered_df$n)
+    
+    if (nrow(filtered_df) < 5) {stop("Not enough unique dropoff locations from this origin point. Please select another starting area location.")}
+    
+     #filter second projection
+    proj2 <- subset(proj, proj$zone %in% paste(input$location))
+    
     #create map
     leaflet(filtered_df) %>%
       addTiles() %>%
       setView(lng = -73.98928, lat = 40.75042, zoom = 10.2) %>%
       addProviderTiles("CartoDB.Positron") %>%
-        addPolygons(
+      addPolygons(
         data = proj,
                   popup = content_do,
                   weight = 1,
-                  fillColor = ~colorQuantile("Blues", filtered_df$n)(filtered_df$n),
+                  fillColor = ~pal(filtered_df$n),
                   fillOpacity = 1,
                   highlightOptions = highlightOptions(
                     color='#000000',
@@ -449,9 +466,17 @@ server <- function(input, output, session) {
                     bringToFront = TRUE,
                     sendToBack = TRUE),
                   label = taxi_zones$zone) %>%
+     addPolygons(data = proj2,
+              weight = 1,
+              color = "Red",
+              highlightOptions = highlightOptions(
+                    color='#000000',
+                    weight = 3,
+                    bringToFront = TRUE,
+                    sendToBack = TRUE)) %>%
       addLegend("topright",
-                pal = colorQuantile("Blues", filtered_df$n, n = 5),
-                values = filtered_df$n,
+                pal = pal,
+                values = ~n,
                 title = "Drop Off Volume",
                 opacity = 1)
   })
