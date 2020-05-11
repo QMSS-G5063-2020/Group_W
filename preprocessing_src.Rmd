@@ -158,10 +158,10 @@ all_months <- all_months %>%
 
 
 ### Exploratory Data Analysis
-Before diving into our final design, our group wanted to first explore and understand the variables. This was done in the following steps. We first conducted a univariate analysis of the variables of interest. 
+Before diving into our final design, our group wanted to first explore and understand the variables. This was done in the following steps. We first conducted a univariate analysis of the variables of interest, then concluded with a bivariate analysis to explore the relationship between the variables.
 
 
-### Univariate Analysis
+#### Univariate Analysis
 
 ```{r}
 plot1 <- ggplot(data=all_months, aes(x=as.numeric(duration)))+
@@ -173,6 +173,8 @@ plot1 <- ggplot(data=all_months, aes(x=as.numeric(duration)))+
 ggplotly(plot1)
 ```
 
+As you can see, this most likely resembles a right skewed distribution, where most of the trip duration centered around 5-20 minutes. This makes sense in real life as most people would get yellow cabs to travel for a short period of time within the city.
+
 ```{r}
 plot2 <- ggplot(data=all_months, aes(x=as.numeric(trip_distance)))+
   geom_histogram(fill='springgreen3', binwidth = 0.3) +
@@ -182,6 +184,8 @@ plot2 <- ggplot(data=all_months, aes(x=as.numeric(trip_distance)))+
   theme_bw()
 ggplotly(plot2)
 ```
+
+This also follows a right skewed distribution, although it is not as distinct as it was for trip duration. This is not surprising, as trip distance should be closely correlated with trip duration. It seems like most trips fall between 0.5 to 2.5 miles.
 
 ```{r}
 plot3 <- ggplot(data=all_months, aes(x=as.numeric(adj_total)))+
@@ -193,7 +197,9 @@ plot3 <- ggplot(data=all_months, aes(x=as.numeric(adj_total)))+
 ggplotly(plot3)
 ```
 
-#Bivariate Analysis
+This shows a more uniform distribution than the last two charts. The most frequent trips are centered around 9-12 dollars. However, it is important to note it is still slightly skewed to the right with more trips falling in the more expensive range from 13.5 dollars to 30 dollars, than cheaper trips below 9 dollars.
+
+#### Bivariate Analysis
 ```{r}
 plot4 <- ggplot(all_months, aes(x=trip_distance, y=as.numeric(duration))) + 
   geom_point(colour="royalblue3") +
@@ -218,6 +224,8 @@ plot6 <- ggplot(all_months, aes(x=trip_distance, y=adj_total)) +
 
 multiplot(plot5,plot6,plot4,cols=1)
 ```
+
+From the multiplots of the three variables of interest, they all seem to share a positive relationship with each other as expected. This is also not surprising because greater the distance, one can expected the trip to last longer in duration, or vice versa. The same can be said about the fare price with either duration or distance of the trip. It is important to note, however, that the relationship between fare and duration or distance is more steep than between distance and duration.
 
 ```{r}
 multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
