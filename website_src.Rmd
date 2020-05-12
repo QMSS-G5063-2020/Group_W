@@ -541,4 +541,6 @@ This final map displays taxi activity. Use the layer filters to display either P
 
 Due to the incompatibility issue between R markdown and shiny app being embedded in a static R markdown html page, we published the R shiny app online in the following link:
 
+This map displays traffic volume based on a given pickup zone. Through a dropdown menu, a user can select a specific pickup location, which is highlighted in red on the map. Once a location is selected, the function calculates the number of dropoffs to all other zones. This calcuation, and subsequent mapping, is performed once a user selects a zone. This map shows a few interesting aspects of taxi activity. For example, one can see the difference in common dropoff zones between LaGuardia and JFK airports. The two most common dropoff locations based on pickups from LaGuardia are Sheepshead Bay and Little Italy/NoLiTa. JFK, on the other hand, most frequently drops off riders at Westchester Village/Unionport and Heartland Village/Todt Hill. This map allows a user to explore features of the data at a greater interactive level than the previous visualizations.
+
 https://jaewham.shinyapps.io/Traffic_Volume/
