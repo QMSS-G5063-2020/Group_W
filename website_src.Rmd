@@ -88,7 +88,7 @@ When aggregating data, our team used median for all variables, apart from tip am
 
 ### Other Links
 
-Please find the online live links to the process book and our presentation below. The original powerpoint slides and the markdown file for the process book can also be found in the public repository for our project.
+Please find the online live links to the process book and our presentation below. The original powerpoint slides and the R markdown file for the process book can also be found in the public repository for our project. It is important to note that the Youtube link cannot be opened within the rpubs website, but have to be copied and pasted in a separate tab or webpage due to security reasons imposed by Youtube.
 
 Process Book: https://rpubs.com/jaeham/groupw_process_book
 
