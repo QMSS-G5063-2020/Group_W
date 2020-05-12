@@ -1,6 +1,6 @@
 ---
 title: "Project Web Site Group W"
-author: "Jae Woong Ham &Andrew Thvedt"
+author: "Jae Woong Ham & Andrew Thvedt"
 date: "5/3/2020"
 output: html_document
 resource_files:
@@ -80,7 +80,7 @@ For this project, Jae and Andrew received permission from Professor Brambor to w
 
 Our website is primarily split into two major portions. For the first part of our visualization, we used various forms of ggplots to demonstrate insightful points for duration of trips. This was done in the form of time series using a combination of aggregation and tailored configuration for each plot. For the second part of our visualization, we used variables that are most suited and ideal to be illustrated on maps for insightful analysis. This was done through leaflet maps with the implementation of aggregated data and custom feature additions.
 
-Please keep in mind that all the graphs are interactive in nature, expect for the exploratory data analysis section. Instead of focusing a specific variable, our group thought it would be more useful to give user the control to use the already-available insights from the visualization based on his/her individual needs, either in the perspective of the consumer or taxi driver. Moreover, for interactive leaflet graph, one needs to not only hover over the area of interest, but also click on the area to display greater information about the area pertaining to the relevant variables of the map.
+Please keep in mind that all the graphs are interactive in nature, except for the exploratory data analysis section. Instead of focusing a specific variable, our group thought it would be more useful to give user the control to use the already-available insights from the visualization based on his/her individual needs, either in the perspective of the consumer or taxi driver. Moreover, for interactive leaflet graph, one needs to not only hover over the area of interest, but also click on the area to display greater information about the area pertaining to the relevant variables of the map.
 
 Our team would also like to point out that the majority of the preprocessing and data scrubbing, as well as exploratory data analysis, are included as part of our process book, and is excluded from this section. This website only includes our final data viusalization outputs, in accordance with the instructions laid out in the class website.
 
@@ -88,9 +88,11 @@ When aggregating data, our team used median for all variables, apart from tip am
 
 ### Other Links
 
+Please find the online live links to the process book and our presentation below. The original powerpoint slides and the markdown file for the process book can also be found in the public repository for our project.
+
 Process Book: https://rpubs.com/jaeham/groupw_process_book
 
-Brief Presentation:
+Brief Presentation: https://youtu.be/4u6H_43spF4
 
 ***
 
@@ -100,7 +102,7 @@ Before diving into our final design, our group wanted to first explore and under
 
 ### Univariate Analysis
 
-```{r}
+```{r, echo = FALSE, warning = FALSE}
 plot1 <- ggplot(data=all_months, aes(x=as.numeric(duration)))+
   geom_histogram(fill='springgreen3', binwidth = 0.5) +
   xlab("Trip Duration (Minutes)") +
@@ -109,9 +111,9 @@ plot1 <- ggplot(data=all_months, aes(x=as.numeric(duration)))+
   theme_bw()
 plot1
 ```
-As you can see, this most likely resembles a right skewed distribution, where most of the trip duration centered around 5-20 minutes. This makes sense in real life as most people would get yellow cabs to travel for a short period of time within the city.
+<br/> As you can see, this most likely resembles a right skewed distribution, where most of the trip duration centered around 5-20 minutes. This makes sense in real life as most people would get yellow cabs to travel for a short period of time within the city.
 
-```{r}
+```{r, echo = FALSE, warning = FALSE}
 plot2 <- ggplot(data=all_months, aes(x=as.numeric(trip_distance)))+
   geom_histogram(fill='springgreen3', binwidth = 0.3) +
   xlab("Trip Distance (Miles)") +
@@ -120,9 +122,9 @@ plot2 <- ggplot(data=all_months, aes(x=as.numeric(trip_distance)))+
   theme_bw()
 plot2
 ```
-This also follows a right skewed distribution, although it is not as distinct as it was for trip duration. This is not surprising, as trip distance should be closely correlated with trip duration. It seems like most trips fall between 0.5 to 2.5 miles.
+<br/> This also follows a right skewed distribution, although it is not as distinct as it was for trip duration. This is not surprising, as trip distance should be closely correlated with trip duration. It seems like most trips fall between 0.5 to 2.5 miles.
 
-```{r}
+```{r, echo = FALSE, warning = FALSE}
 plot3 <- ggplot(data=all_months, aes(x=as.numeric(adj_total)))+
   geom_histogram(fill='springgreen3', binwidth=1.5) +
   xlab("Adjusted Fare Total (Dollars)") +
@@ -131,11 +133,11 @@ plot3 <- ggplot(data=all_months, aes(x=as.numeric(adj_total)))+
   theme_bw()
 plot3
 ```
-This shows a more uniform distribution than the last two charts. The most frequent trips are centered around 9-12 dollars. However, it is important to note it is still slightly skewed to the right with more trips falling in the more expensive range from 13.5 dollars to 30 dollars, than cheaper trips below 9 dollars.
+<br/> This shows a more uniform distribution than the last two charts. The most frequent trips are centered around 9-12 dollars. However, it is important to note it is still slightly skewed to the right with more trips falling in the more expensive range from 13.5 dollars to 30 dollars, than cheaper trips below 9 dollars.
 
 ### Bivariate Analysis
 
-```{r}
+```{r, echo = FALSE, warning = FALSE}
 # this code is sourced from http://www.cookbook-r.com/Graphs/Multiple_graphs_on_one_page_(ggplot2)/, as the multiplot function is no longer offered as a built in function with the newest version of R
 multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
   library(grid)
@@ -174,7 +176,7 @@ multiplot <- function(..., plotlist=NULL, file, cols=1, layout=NULL) {
 }
 ```
 
-```{r}
+```{r, echo = FALSE, warning = FALSE}
 plot4 <- ggplot(all_months, aes(x=trip_distance, y=as.numeric(duration))) + 
   geom_point(colour="royalblue3") +
   labs(title="Distance vs Duration", x="Distance (Miles)", y="Duration (Minutes)") +
@@ -198,13 +200,13 @@ plot6 <- ggplot(all_months, aes(x=trip_distance, y=adj_total)) +
 
 multiplot(plot5,plot6,plot4,cols=1)
 ```
-From the multiplots of the three variables of interest, they all seem to share a positive relationship with each other as expected. This is also not surprising because greater the distance, one can expected the trip to last longer in duration, or vice versa. The same can be said about the fare price with either duration or distance of the trip. It is important to note, however, that the relationship between fare and duration or distance is more steep than between distance and duration.
+<br/>  From the multiplots of the three variables of interest, they all seem to share a positive relationship with each other as expected. This is also not surprising because greater the distance, one can expected the trip to last longer in duration, or vice versa. The same can be said about the fare price with either duration or distance of the trip. It is important to note, however, that the relationship between fare and duration or distance is more steep than between distance and duration.
 
 ***
 
 ## Time Series Analysis using ggplots
 
-Using ggplots, our group first decided to focus on the duration of the trip. We think there is an interesting story to be told from such variable. From a consumer perspective, it will be useful for someone to know when the trip will be shortest at what hour of the day, what day of the week or at what month of the year. Vice versa, it will also be useful for a cab driver to know when the trip will be the longest or shortest. Even though the same approach could have been incorporate for trip distance and fare amount, we thought this can be best shown on the map, instead of graphs. This is shown in our next section.
+Using ggplots, our group first decided to focus on the duration of the trip. We think there is an interesting story to be told from such variable. From a consumer perspective, it will be useful for someone to know when the trip will be shortest at what hour of the day, what day of the week or at what month of the year. Vice versa, it will also be useful for a cab driver to know when the trip will be the longest or shortest. Even though the same approach could have been incorporated for trip distance and fare amount, we thought this can be best shown on the map, instead of graphs. This is shown in our next section.
 
 ```{r, echo = FALSE}
 plot7 <- all_months %>%
